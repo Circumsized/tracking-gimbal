@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" width="100%" height="100%" style="background-color: #090d16; font-family: 'Consolas', 'Monaco', 'Courier New', monospace;">
+  <defs>
+    <linearGradient id="fld-mode" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="fld-node" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="fld-float" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="fld-rsv" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <text x="30" y="38" fill="#f8fafc" font-size="18" font-weight="bold" font-family="-apple-system, sans-serif">CubeMars GL40 CAN 现场总线 11-Bit 标准帧与 64-Bit 数据负载手册级位域拓扑</text>
+  <text x="30" y="60" fill="#64748b" font-size="11">CUBEMARS GL40 STANDARD 11-BIT CAN ARBITRATION ID &amp; IEEE-754 SPEED PAYLOAD BITFIELD</text>
+
+  <!-- 1. 11-Bit 仲裁段 ID -->
+  <g transform="translate(30, 90)">
+    <text x="0" y="0" fill="#38bdf8" font-size="13" font-weight="bold">1. Standard 11-Bit CAN ID (1Mbps, 模式偏移基底 0x200)</text>
+    
+    <!-- 标尺 -->
+    <text x="12" y="24" fill="#94a3b8" font-size="10">Bit 10</text>
+    <text x="110" y="24" fill="#94a3b8" font-size="10">Bit 8</text>
+    <text x="210" y="24" fill="#94a3b8" font-size="10">Bit 7</text>
+    <text x="560" y="24" fill="#94a3b8" font-size="10">Bit 0</text>
+
+    <!-- 模式段 [10:8] -->
+    <rect x="0" y="32" width="200" height="52" rx="4" fill="url(#fld-mode)" stroke="#60a5fa" stroke-width="1.2"/>
+    <text x="100" y="55" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Mode Bits [10:8]</text>
+    <text x="100" y="73" fill="#bfdbfe" font-size="10.5" text-anchor="middle">0x02 = 速度控制模式 (Speed)</text>
+
+    <!-- 节点段 [7:0] -->
+    <rect x="204" y="32" width="400" height="52" rx="4" fill="url(#fld-node)" stroke="#34d399" stroke-width="1.2"/>
+    <text x="404" y="55" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Node ID Bits [7:0]</text>
+    <text x="404" y="73" fill="#a7f3d0" font-size="10.5" text-anchor="middle">0x01: Yaw 偏航轴 (0x201)  |  0x02: Pitch 俯仰轴 (0x202)</text>
+  </g>
+
+  <!-- 2. 64-Bit 数据负载 -->
+  <g transform="translate(30, 215)">
+    <text x="0" y="0" fill="#a78bfa" font-size="13" font-weight="bold">2. Data Payload DLC=8 (小端 float32 速度指令 + 保留对齐)</text>
+    
+    <!-- 标尺 -->
+    <text x="10" y="22" fill="#94a3b8" font-size="10">Byte 0 [7:0]</text>
+    <text x="135" y="22" fill="#94a3b8" font-size="10">Byte 1 [15:8]</text>
+    <text x="260" y="22" fill="#94a3b8" font-size="10">Byte 2 [23:16]</text>
+    <text x="385" y="22" fill="#94a3b8" font-size="10">Byte 3 [31:24]</text>
+    <text x="520" y="22" fill="#64748b" font-size="10">Byte 4 (0x00)</text>
+    <text x="645" y="22" fill="#64748b" font-size="10">Byte 5 (0x00)</text>
+    <text x="770" y="22" fill="#64748b" font-size="10">Byte 6 (0x00)</text>
+    <text x="895" y="22" fill="#64748b" font-size="10">Byte 7 (0x00)</text>
+
+    <!-- Byte 0~3 (float32) -->
+    <rect x="0" y="30" width="120" height="75" rx="4" fill="url(#fld-float)" stroke="#a78bfa" stroke-width="1"/>
+    <text x="60" y="58" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">M[7:0]</text>
+    <text x="60" y="80" fill="#ddd6fe" font-size="9.5" text-anchor="middle">尾数低 8 位</text>
+
+    <rect x="124" y="30" width="120" height="75" rx="4" fill="url(#fld-float)" stroke="#a78bfa" stroke-width="1"/>
+    <text x="184" y="58" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">M[15:8]</text>
+    <text x="184" y="80" fill="#ddd6fe" font-size="9.5" text-anchor="middle">尾数中 8 位</text>
+
+    <rect x="248" y="30" width="120" height="75" rx="4" fill="url(#fld-float)" stroke="#a78bfa" stroke-width="1"/>
+    <text x="308" y="58" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">E[0] + M[22:16]</text>
+    <text x="308" y="80" fill="#ddd6fe" font-size="9.5" text-anchor="middle">阶码低位+尾数高</text>
+
+    <rect x="372" y="30" width="120" height="75" rx="4" fill="url(#fld-float)" stroke="#a78bfa" stroke-width="1"/>
+    <text x="432" y="58" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">S[31] + E[7:1]</text>
+    <text x="432" y="80" fill="#ddd6fe" font-size="9.5" text-anchor="middle">符号位 + 阶码高</text>
+
+    <!-- Byte 4~7 (Reserved) -->
+    <rect x="502" y="30" width="115" height="75" rx="4" fill="url(#fld-rsv)" stroke="#475569" stroke-width="1"/>
+    <text x="559" y="65" fill="#94a3b8" font-size="12" text-anchor="middle">0x00</text>
+    <text x="559" y="85" fill="#64748b" font-size="9" text-anchor="middle">保留补齐</text>
+
+    <rect x="622" y="30" width="115" height="75" rx="4" fill="url(#fld-rsv)" stroke="#475569" stroke-width="1"/>
+    <text x="679" y="65" fill="#94a3b8" font-size="12" text-anchor="middle">0x00</text>
+    <text x="679" y="85" fill="#64748b" font-size="9" text-anchor="middle">保留补齐</text>
+
+    <rect x="742" y="30" width="115" height="75" rx="4" fill="url(#fld-rsv)" stroke="#475569" stroke-width="1"/>
+    <text x="799" y="65" fill="#94a3b8" font-size="12" text-anchor="middle">0x00</text>
+    <text x="799" y="85" fill="#64748b" font-size="9" text-anchor="middle">保留补齐</text>
+
+    <rect x="862" y="30" width="115" height="75" rx="4" fill="url(#fld-rsv)" stroke="#475569" stroke-width="1"/>
+    <text x="919" y="65" fill="#94a3b8" font-size="12" text-anchor="middle">0x00</text>
+    <text x="919" y="85" fill="#64748b" font-size="9" text-anchor="middle">保留补齐</text>
+  </g>
+
+  <!-- 3. 打包代码与小端解析说明 -->
+  <g transform="translate(30, 375)">
+    <rect width="1040" height="70" rx="6" fill="#111827" stroke="#374151" stroke-width="1"/>
+    <text x="20" y="28" fill="#34d399" font-size="12">Python 打包实现: struct.pack("&lt;f", float(vel)) + bytes([0x00, 0x00, 0x00, 0x00])</text>
+    <text x="20" y="52" fill="#94a3b8" font-size="11">小端序说明: 低有效位位于低字节地址 (Byte 0 存放尾数最低 8 位，Byte 3 最高位存放符号位 S)</text>
+  </g>
+</svg>

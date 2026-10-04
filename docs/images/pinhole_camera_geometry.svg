@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" width="100%" height="100%" style="background-color: #0a0f1d; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="30" y="40" fill="#f8fafc" font-size="19" font-weight="bold">IMX219 广角针孔成像模型与云台像平面偏差反投影几何变换</text>
+  <text x="30" y="62" fill="#64748b" font-size="11">PINHOLE CAMERA PERSPECTIVE PROJECTION &amp; GIMBAL KINEMATIC FRAME TRANSFORMATION</text>
+
+  <!-- 左侧: 3D 针孔相机几何模型 -->
+  <g transform="translate(60, 100)">
+    <!-- 光心 Oc -->
+    <circle cx="80" cy="180" r="6" fill="#38bdf8"/>
+    <text x="40" y="185" fill="#38bdf8" font-size="13" font-weight="bold">光心 Oc</text>
+
+    <!-- 光轴 Zc -->
+    <line x1="80" y1="180" x2="380" y2="180" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4 2" marker-end="url(#arrow-blue)"/>
+    <text x="360" y="170" fill="#38bdf8" font-size="11">主光轴 Zc</text>
+
+    <!-- 像平面 (物理传感器) -->
+    <polygon points="220,90 290,120 290,260 220,230" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5" opacity="0.8"/>
+    <circle cx="255" cy="180" r="4" fill="#f43f5e"/>
+    <text x="265" y="175" fill="#fca5a5" font-size="10">主点 c(320,240)</text>
+    <text x="210" y="80" fill="#93c5fd" font-size="11" font-weight="bold">像平面 (Image Plane)</text>
+    <text x="210" y="280" fill="#94a3b8" font-size="10">焦距 f_px ≈ 250px</text>
+
+    <!-- 空间 3D 目标点 P(X, Y, Z) -->
+    <circle cx="440" cy="80" r="7" fill="#f59e0b"/>
+    <text x="455" y="80" fill="#fde68a" font-size="12" font-weight="bold">人脸目标 P(X,Y,Z)</text>
+
+    <!-- 视线投影光线 -->
+    <line x1="80" y1="180" x2="440" y2="80" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3"/>
+    
+    <!-- 像平面交点 p(u, v) -->
+    <circle cx="265" cy="130" r="5" fill="#ef4444"/>
+    <text x="278" y="132" fill="#f87171" font-size="11" font-weight="bold">p(u, v)</text>
+
+    <!-- 投影公式标注 -->
+    <text x="20" y="320" fill="#cbd5e1" font-size="11">透视投影公式: u = fx·(X/Z) + cx ,  v = fy·(Y/Z) + cy</text>
+  </g>
+
+  <!-- 右侧: 像平面偏差到角速度的映射几何 -->
+  <g transform="translate(560, 100)">
+    <rect width="380" height="280" rx="8" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+    <text x="20" y="30" fill="#38bdf8" font-size="14" font-weight="bold">像平面几何误差向云台角速度映射</text>
+    
+    <!-- 640x480 外框 -->
+    <rect x="50" y="55" width="280" height="180" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <!-- 十字中心 -->
+    <line x1="190" y1="55" x2="190" y2="235" stroke="#64748b" stroke-width="1" stroke-dasharray="2 2"/>
+    <line x1="50" y1="145" x2="330" y2="145" stroke="#64748b" stroke-width="1" stroke-dasharray="2 2"/>
+
+    <!-- 死区盒 -->
+    <rect x="175" y="130" width="30" height="30" fill="#ef4444" opacity="0.4" stroke="#f87171" stroke-width="1.2"/>
+    <text x="190" y="148" fill="#ffffff" font-size="8" text-anchor="middle">±15px</text>
+
+    <!-- 人脸目标框 -->
+    <rect x="230" y="80" width="45" height="45" fill="none" stroke="#22c55e" stroke-width="1.8"/>
+    <circle cx="252" cy="102" r="3" fill="#22c55e"/>
+    
+    <!-- 误差向量连线 -->
+    <line x1="190" y1="145" x2="252" y2="102" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#arrow-red)"/>
+    <text x="230" y="135" fill="#fde68a" font-size="10" font-weight="bold">e = [e_x, e_y]ᵀ</text>
+
+    <!-- 速度控制输出公式 -->
+    <text x="20" y="260" fill="#34d399" font-size="11">Yaw: ω_yaw = -0.003 · e_x  |  Pitch: ω_pitch = +0.003 · e_y</text>
+  </g>
+</svg>

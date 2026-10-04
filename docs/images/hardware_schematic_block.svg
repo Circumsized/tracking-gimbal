@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 580" width="1140" height="580" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrWire" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrPwr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <!-- 背景底板 -->
+  <rect width="1140" height="580" rx="16" fill="#0b1120" stroke="#334155" stroke-width="2"/>
+
+  <!-- 主标题栏 -->
+  <g transform="translate(40, 36)">
+    <text x="0" y="0" fill="#f8fafc" font-size="19" font-weight="700">跟踪云台专用电路底板原理图拓扑 (ProPrj_跟踪云台电路板.epro2 架构)</text>
+    <text x="0" y="24" fill="#94a3b8" font-size="12">基于嘉立创专业版实际提取元器件构建 · 供电稳压网络、SPI-CAN总线转换与地平面隔离设计</text>
+  </g>
+
+  <!-- 1. 电源输入单元 CN1 (x=40, y=90, w=160, h=130) -->
+  <g transform="translate(40, 90)">
+    <rect width="160" height="130" rx="8" fill="#111827" stroke="#ef4444" stroke-width="1.8"/>
+    <text x="16" y="28" fill="#fca5a5" font-size="13.5" font-weight="bold">CN1 动力电源入口</text>
+    <line x1="16" y1="38" x2="144" y2="38" stroke="#374151" stroke-width="1"/>
+    <text x="16" y="60" fill="#cbd5e1" font-size="11">● 封装: XT30PW-M</text>
+    <text x="16" y="82" fill="#cbd5e1" font-size="11">● 网络: VIN (12~24V)</text>
+    <text x="16" y="104" fill="#cbd5e1" font-size="11">● 地线: 功率地 GND</text>
+    <text x="16" y="120" fill="#38bdf8" font-size="10">直通双轴 GL40 电机母线</text>
+  </g>
+
+  <!-- 2. 开关降压芯片 U1 LM2596 (x=245, y=90, w=200, h=130) -->
+  <g transform="translate(245, 90)">
+    <rect width="200" height="130" rx="8" fill="#111827" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="16" y="28" fill="#fde68a" font-size="13.5" font-weight="bold">U1: LM2596SX-5.0</text>
+    <line x1="16" y1="38" x2="184" y2="38" stroke="#374151" stroke-width="1"/>
+    <text x="16" y="60" fill="#cbd5e1" font-size="11">● 封装: TO-263-5 (贴片)</text>
+    <text x="16" y="82" fill="#cbd5e1" font-size="11">● 输入: VIN (大电流母线)</text>
+    <text x="16" y="104" fill="#34d399" font-size="11">● 输出: VCC (5.0V / 3A)</text>
+    <text x="16" y="120" fill="#94a3b8" font-size="10">退耦: 10uF 0805 (C3, C4)</text>
+  </g>
+
+  <!-- 3. 树莓派 40-Pin 排母插座 J1 (x=490, y=90, w=270, h=445) -->
+  <g transform="translate(490, 90)">
+    <rect width="270" height="445" rx="8" fill="#111827" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="16" y="28" fill="#f3e8ff" font-size="14" font-weight="bold">J1: 树莓派 Zero 2 W 排母</text>
+    <text x="16" y="48" fill="#d8b4fe" font-size="11">2.54mm 2x20P (P125-1220A0BS)</text>
+    <line x1="16" y1="58" x2="254" y2="58" stroke="#374151" stroke-width="1"/>
+
+    <!-- 排母内部引脚网络标注 (清晰无乱码) -->
+    <text x="18" y="82" fill="#ef4444" font-size="11" font-weight="bold">Pin 2, 4  : 5V 主供电输入 (VCC)</text>
+    <text x="18" y="104" fill="#94a3b8" font-size="11">Pin 6, 9  : GND (系统总地)</text>
+    <text x="18" y="126" fill="#38bdf8" font-size="11">Pin 1     : 3V3 (片上基准供电)</text>
+    <line x1="16" y1="138" x2="254" y2="138" stroke="#374151" stroke-width="0.8"/>
+    
+    <text x="18" y="160" fill="#34d399" font-size="11" font-weight="bold">Pin 8  (TXD)  -&gt;  TFmini RX</text>
+    <text x="18" y="182" fill="#34d399" font-size="11" font-weight="bold">Pin 10 (RXD)  &lt;-  TFmini TX</text>
+    <line x1="16" y1="196" x2="254" y2="196" stroke="#374151" stroke-width="0.8"/>
+
+    <text x="18" y="218" fill="#fb923c" font-size="11" font-weight="bold">Pin 19 (MOSI) -&gt;  MCP2515 SI</text>
+    <text x="18" y="240" fill="#fb923c" font-size="11" font-weight="bold">Pin 21 (MISO) &lt;-  MCP2515 SO</text>
+    <text x="18" y="262" fill="#fb923c" font-size="11" font-weight="bold">Pin 23 (SCLK) -&gt;  MCP2515 SCK</text>
+    <text x="18" y="284" fill="#fb923c" font-size="11" font-weight="bold">Pin 24 (CE0)  -&gt;  MCP2515 CS</text>
+    <text x="18" y="306" fill="#fb923c" font-size="11" font-weight="bold">Pin 22 (GP25) &lt;-  MCP2515 INT</text>
+    <line x1="16" y1="324" x2="254" y2="324" stroke="#374151" stroke-width="0.8"/>
+
+    <text x="18" y="348" fill="#cbd5e1" font-size="11" font-weight="bold">板载单点接地隔离:</text>
+    <text x="18" y="370" fill="#94a3b8" font-size="10.5">R3, R4: 0 Ohm 贴片 (GND 汇接 AGND)</text>
+    
+    <text x="18" y="398" fill="#cbd5e1" font-size="11" font-weight="bold">上拉偏置网络:</text>
+    <text x="18" y="420" fill="#94a3b8" font-size="10.5">R1, R2: 10k Ohm 0603 (RESET / INT)</text>
+  </g>
+
+  <!-- 4. SPI-CAN 控制器 U2 MCP2515 (x=805, y=90, w=295, h=195) -->
+  <g transform="translate(805, 90)">
+    <rect width="295" height="195" rx="8" fill="#111827" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="16" y="28" fill="#e0f2fe" font-size="13.5" font-weight="bold">U2: MCP2515T-I/ST (CAN 控制器)</text>
+    <line x1="16" y1="38" x2="279" y2="38" stroke="#374151" stroke-width="1"/>
+    <text x="16" y="60" fill="#cbd5e1" font-size="11">● 封装: TSSOP-20 (0.65mm 引脚间距)</text>
+    <text x="16" y="82" fill="#cbd5e1" font-size="11">● 供电: 3.3V (树莓派 3V3 电源轨)</text>
+    <text x="16" y="104" fill="#38bdf8" font-size="11">● 外部时钟源 X1: SMD3225 8.000MHz 晶振</text>
+    <text x="16" y="124" fill="#94a3b8" font-size="10.5">  负载匹配电容: C1, C2 (10pF C0G 0603)</text>
+    <text x="16" y="146" fill="#fde68a" font-size="11">● 控制器差分接口: TxCAN / RxCAN</text>
+    <text x="16" y="168" fill="#34d399" font-size="11">● 硬件中断输出: INT -&gt; 树莓派 GPIO25</text>
+    <text x="16" y="186" fill="#94a3b8" font-size="10">内核驱动覆盖: dtoverlay=mcp2515-can0</text>
+  </g>
+
+  <!-- 5. 3.3V CAN 收发器 U3 & U4 (x=805, y=310, w=295, h=225) -->
+  <g transform="translate(805, 310)">
+    <rect width="295" height="225" rx="8" fill="#111827" stroke="#10b981" stroke-width="1.8"/>
+    <text x="16" y="28" fill="#d1fae5" font-size="13.5" font-weight="bold">U3 / U4: SN65HVD230DR (收发器)</text>
+    <line x1="16" y1="38" x2="279" y2="38" stroke="#374151" stroke-width="1"/>
+    <text x="16" y="60" fill="#cbd5e1" font-size="11">● 封装: SOIC-8 (150mil 贴片)</text>
+    <text x="16" y="82" fill="#cbd5e1" font-size="11">● 驱动标准: ISO 11898-2 物理层规范</text>
+    <text x="16" y="104" fill="#34d399" font-size="11">● 差分物理输出: CAN_H / CAN_L (1Mbps)</text>
+    <text x="16" y="126" fill="#fde68a" font-size="11">● 终端匹配电阻: 120 Ohm 高频总线负载</text>
+    <line x1="16" y1="138" x2="279" y2="138" stroke="#374151" stroke-width="0.8"/>
+    
+    <text x="16" y="158" fill="#f8fafc" font-size="11.5" font-weight="bold">出线接插件 CN2 (GH1.25 卧贴插座):</text>
+    <text x="16" y="178" fill="#cbd5e1" font-size="10.5">Pin 1: CAN_H  -&gt;  GL40 双电机黄色线</text>
+    <text x="16" y="196" fill="#cbd5e1" font-size="10.5">Pin 2: CAN_L  -&gt;  GL40 双电机蓝色线</text>
+    <text x="16" y="214" fill="#cbd5e1" font-size="10.5">Pin 3: GND    -&gt;  双绞屏蔽地线</text>
+  </g>
+
+  <!-- ==================== 电源与总线导线走廊 (无交叠) ==================== -->
+  <!-- VIN 导线: CN1 -> LM2596 -->
+  <line x1="200" y1="155" x2="243" y2="155" stroke="#ef4444" stroke-width="3" marker-end="url(#arrPwr)"/>
+  <rect x="208" y="138" width="28" height="15" rx="3" fill="#0f172a" stroke="#ef4444" stroke-width="0.8"/>
+  <text x="222" y="150" fill="#fca5a5" font-size="9" font-weight="bold" text-anchor="middle">VIN</text>
+
+  <!-- 5V 导线: LM2596 -> J1 -->
+  <line x1="445" y1="155" x2="488" y2="155" stroke="#ef4444" stroke-width="3" marker-end="url(#arrPwr)"/>
+  <rect x="453" y="138" width="26" height="15" rx="3" fill="#0f172a" stroke="#22c55e" stroke-width="0.8"/>
+  <text x="466" y="150" fill="#86efac" font-size="9" font-weight="bold" text-anchor="middle">5V</text>
+
+  <!-- SPI 总线导线: J1 -> MCP2515 -->
+  <line x1="760" y1="200" x2="803" y2="200" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrWire)"/>
+  <rect x="768" y="183" width="28" height="15" rx="3" fill="#0f172a" stroke="#0284c7" stroke-width="0.8"/>
+  <text x="782" y="195" fill="#38bdf8" font-size="9" font-weight="bold" text-anchor="middle">SPI</text>
+
+  <!-- CAN 控制线: MCP2515 -> SN65HVD230 -->
+  <line x1="950" y1="285" x2="950" y2="308" stroke="#10b981" stroke-width="2.5"/>
+</svg>

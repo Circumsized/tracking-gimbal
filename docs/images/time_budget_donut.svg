@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 640" width="1140" height="640" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <!-- 背景底色 -->
+  <rect width="1140" height="640" rx="16" fill="#0b1120" stroke="#334155" stroke-width="2"/>
+
+  <!-- 头部主标题栏 -->
+  <g transform="translate(45, 38)">
+    <circle cx="10" cy="12" r="5" fill="#f59e0b"/>
+    <text x="26" y="18" fill="#f8fafc" font-size="20" font-weight="700">跟踪云台单周期 22.7ms 实测时间预算与算力消耗分解图</text>
+    <text x="26" y="38" fill="#94a3b8" font-size="12">Raspberry Pi Zero 2 W (4×A53 @ 1.0GHz) 50Hz 闭环实测运行开销 · 含 5ms 轴间防冲突休眠口径</text>
+  </g>
+
+  <!-- 左侧: 纯矢量甜甜圈圆环图 (Donut Chart) -->
+  <g id="DonutSlices">
+    <path d="M 330.00 150.00 A 190 190 0 1 1 306.40 528.53 L 315.71 454.11 A 115 115 0 1 0 330.00 225.00 Z" fill="#f59e0b" stroke="#0b1120" stroke-width="2.5"/><path d="M 306.40 528.53 A 190 190 0 0 1 140.04 336.06 L 215.02 337.61 A 115 115 0 0 0 315.71 454.11 Z" fill="#ec4899" stroke="#0b1120" stroke-width="2.5"/><path d="M 140.04 336.06 A 190 190 0 0 1 258.20 164.09 L 286.54 233.53 A 115 115 0 0 0 215.02 337.61 Z" fill="#3b82f6" stroke="#0b1120" stroke-width="2.5"/><path d="M 258.20 164.09 A 190 190 0 0 1 298.59 152.61 L 310.99 226.58 A 115 115 0 0 0 286.54 233.53 Z" fill="#8b5cf6" stroke="#0b1120" stroke-width="2.5"/><path d="M 298.59 152.61 A 190 190 0 0 1 314.24 150.65 L 320.46 225.40 A 115 115 0 0 0 310.99 226.58 Z" fill="#10b981" stroke="#0b1120" stroke-width="2.5"/><path d="M 314.24 150.65 A 190 190 0 0 1 324.74 150.07 L 326.82 225.04 A 115 115 0 0 0 320.46 225.40 Z" fill="#94a3b8" stroke="#0b1120" stroke-width="2.5"/><path d="M 324.74 150.07 A 190 190 0 0 1 330.00 150.00 L 330.00 225.00 A 115 115 0 0 0 326.82 225.04 Z" fill="#06b6d4" stroke="#0b1120" stroke-width="2.5"/>
+    <text x="482.2" y="353.5" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">52.0%</text><text x="214.6" y="443.7" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">23.4%</text><text x="204.3" y="257.6" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">18.5%</text>
+  </g>
+
+  <!-- 环形圆心大指标 (Center Callout) -->
+  <g id="CenterStats">
+    <circle cx="330" cy="340" r="111" fill="#0b1120" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="330" y="318" fill="#94a3b8" font-size="11" font-weight="600" text-anchor="middle">单周期实测总耗时</text>
+    <text x="330" y="348" fill="#f8fafc" font-size="24" font-weight="800" text-anchor="middle">≈ 22.7 ms</text>
+    <rect x="255" y="358" width="150" height="22" rx="4" fill="#7f1d1d" fill-opacity="0.4" stroke="#ef4444" stroke-width="0.8"/>
+    <text x="330" y="373" fill="#fca5a5" font-size="10.5" font-weight="bold" text-anchor="middle">有效控制率 ≈ 44.1 Hz</text>
+    <text x="330" y="392" fill="#64748b" font-size="9.5" text-anchor="middle">(标称门控门限 T = 20ms)</text>
+  </g>
+
+  <!-- 右侧: 任务耗时卡片清单 (Card List, 彻底根除重叠乱码) -->
+  <g id="TaskCards">
+    
+    <g transform="translate(630, 110)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#f59e0b"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">YuNet ONNX 人脸检测推理</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">detector.detect() 单核 A53 主算力占用</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">11.8 ms</text>
+      <text x="445" y="46" fill="#f59e0b" font-size="11" font-weight="bold" text-anchor="end">52.0%</text>
+    </g>
+    <g transform="translate(630, 182)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#ec4899"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">CAN 双轴下发 (含 5ms 轴间休眠)</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">send_yaw(0x201) + sleep(5ms) + send_pitch(0x202)</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">5.3 ms</text>
+      <text x="445" y="46" fill="#ec4899" font-size="11" font-weight="bold" text-anchor="end">23.4%</text>
+    </g>
+    <g transform="translate(630, 254)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#3b82f6"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">Picamera2 帧捕获与降采样</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">硬件捕获 1640×1232 + resize(640×480)</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">4.2 ms</text>
+      <text x="445" y="46" fill="#3b82f6" font-size="11" font-weight="bold" text-anchor="end">18.5%</text>
+    </g>
+    <g transform="translate(630, 326)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#8b5cf6"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">OSD 文本绘制与控制律解算</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">十字准星渲染、偏差与死区限幅判断</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">0.8 ms</text>
+      <text x="445" y="46" fill="#8b5cf6" font-size="11" font-weight="bold" text-anchor="end">3.5%</text>
+    </g>
+    <g transform="translate(630, 398)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#10b981"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">TFmini 测距线程锁提取</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">线程安全锁保护读取最新雷达距离 (cm)</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">0.3 ms</text>
+      <text x="445" y="46" fill="#10b981" font-size="11" font-weight="bold" text-anchor="end">1.3%</text>
+    </g>
+    <g transform="translate(630, 470)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#94a3b8"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">系统调度与时钟判断开销</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">Python GIL、Linux CFS 上下文切换</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">0.2 ms</text>
+      <text x="445" y="46" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="end">0.9%</text>
+    </g>
+    <g transform="translate(630, 542)">
+      <rect width="465" height="62" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="14" width="10" height="34" rx="3" fill="#06b6d4"/>
+      <text x="32" y="27" fill="#f8fafc" font-size="12.5" font-weight="700">推流帧更新 (内存浅拷贝)</text>
+      <text x="32" y="47" fill="#94a3b8" font-size="10.5">streamer.update_frame 帧缓冲区写入</text>
+      <text x="445" y="28" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="end">0.1 ms</text>
+      <text x="445" y="46" fill="#06b6d4" font-size="11" font-weight="bold" text-anchor="end">0.4%</text>
+    </g>
+  </g>
+
+  <!-- 底部关键总结提示栏 -->
+  <g transform="translate(45, 595)">
+    <rect width="1050" height="30" rx="6" fill="#111827" stroke="#334155" stroke-width="1"/>
+    <text x="525.0" y="19" fill="#cbd5e1" font-size="11" text-anchor="middle">
+      注：前三大核心任务 (YuNet 推理 52.0% + CAN 下发 23.4% + 采图 18.5%) 合计占用 93.9% 单周期时间；其余微小开销均在右侧列表清晰列出，绝无重叠。
+    </text>
+  </g>
+</svg>

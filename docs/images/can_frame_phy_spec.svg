@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="canBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glowF" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="1120" height="500" rx="14" fill="url(#canBg)" stroke="#334155" stroke-width="2"/>
+  <text x="35" y="38" fill="#f8fafc" font-size="18" font-weight="700">CAN 2.0B 标准数据帧物理层时序与 GL40 速度报文协议全解 (1Mbps Standard Frame)</text>
+  <text x="35" y="58" fill="#94a3b8" font-size="12">11-Bit 仲裁段模式/节点编址 · 8-Byte 数据段小端浮点数位域排布 · CRC15 校验与 ACK 交互槽</text>
+
+  <!-- 总体帧序列块 (从左至右) -->
+  <g transform="translate(35, 95)">
+    <!-- SOF -->
+    <rect x="0" y="0" width="40" height="65" rx="4" fill="#64748b" stroke="#94a3b8" stroke-width="1.2" filter="url(#glowF)"/>
+    <text x="20" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">SOF</text>
+    <text x="20" y="46" fill="#cbd5e1" font-size="9" text-anchor="middle">1-bit</text>
+    <text x="20" y="58" fill="#cbd5e1" font-size="8.5" text-anchor="middle">显性 0</text>
+
+    <!-- 11-Bit 仲裁段 -->
+    <rect x="45" y="0" width="220" height="65" rx="4" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5" filter="url(#glowF)"/>
+    <text x="155" y="24" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">11-Bit 仲裁标识段 (Standard ID)</text>
+    <text x="155" y="42" fill="#e0f2fe" font-size="10" text-anchor="middle">0x201 (Yaw 轴) / 0x202 (Pitch 轴)</text>
+    <text x="155" y="56" fill="#bae6fd" font-size="9" text-anchor="middle">Mode[10:8]=0x2 (速度模式) | ID[7:0]=0x1/0x2</text>
+
+    <!-- RTR & IDE & r0 -->
+    <rect x="270" y="0" width="80" height="65" rx="4" fill="#475569" stroke="#64748b" stroke-width="1.2" filter="url(#glowF)"/>
+    <text x="310" y="24" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">控制位</text>
+    <text x="310" y="42" fill="#cbd5e1" font-size="9.5" text-anchor="middle">RTR(0)+IDE(0)</text>
+    <text x="310" y="56" fill="#cbd5e1" font-size="9" text-anchor="middle">+ r0 (保留0)</text>
+
+    <!-- DLC -->
+    <rect x="355" y="0" width="65" height="65" rx="4" fill="#0d9488" stroke="#2dd4bf" stroke-width="1.2" filter="url(#glowF)"/>
+    <text x="387" y="26" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">DLC</text>
+    <text x="387" y="44" fill="#ccfbf1" font-size="10" text-anchor="middle">4-bit</text>
+    <text x="387" y="58" fill="#ccfbf1" font-size="9" text-anchor="middle">8 字节</text>
+
+    <!-- DATA FIELD (64-bit) -->
+    <rect x="425" y="0" width="410" height="65" rx="4" fill="#4f46e5" stroke="#818cf8" stroke-width="1.8" filter="url(#glowF)"/>
+    <text x="630" y="24" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">数据负载段 (Data Field · 8 Bytes = 64 Bits)</text>
+    <text x="630" y="42" fill="#e0e7ff" font-size="10.5" text-anchor="middle">Byte 0~3: IEEE-754 速度 (rad/s) | Byte 4~7: 保留填充 0x00</text>
+    <text x="630" y="56" fill="#c7d2fe" font-size="9.5" text-anchor="middle">传输顺序: 低字节先行 (Little-Endian)</text>
+
+    <!-- CRC FIELD -->
+    <rect x="840" y="0" width="110" height="65" rx="4" fill="#b45309" stroke="#f59e0b" stroke-width="1.2" filter="url(#glowF)"/>
+    <text x="895" y="26" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CRC 校验段</text>
+    <text x="895" y="44" fill="#fef3c7" font-size="9.5" text-anchor="middle">CRC15 (15位)</text>
+    <text x="895" y="58" fill="#fef3c7" font-size="8.5" text-anchor="middle">+ CRC界定符(1)</text>
+
+    <!-- ACK & EOF -->
+    <rect x="955" y="0" width="95" height="65" rx="4" fill="#15803d" stroke="#4ade80" stroke-width="1.2" filter="url(#glowF)"/>
+    <text x="1002" y="26" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">ACK / EOF</text>
+    <text x="1002" y="44" fill="#dcfce7" font-size="9.5" text-anchor="middle">从机应答槽(2)</text>
+    <text x="1002" y="58" fill="#dcfce7" font-size="8.5" text-anchor="middle">EOF(7位隐性)</text>
+  </g>
+
+  <!-- 详细展开 1: 数据负载段 8 字节分解 -->
+  <g transform="translate(35, 185)">
+    <rect width="1050" height="150" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="24" fill="#818cf8" font-size="13" font-weight="bold">▍数据段 (Data Field) 8 字节内存排布详解 (struct.pack("&lt;f", vel) + bytes(4)):</text>
+
+    <!-- 8 个独立字节框 -->
+    <g transform="translate(20, 40)">
+      <!-- Byte 0 -->
+      <rect x="0" y="0" width="120" height="90" rx="4" fill="#312e81" stroke="#6366f1" stroke-width="1.2"/>
+      <text x="60" y="22" fill="#c7d2fe" font-size="11" font-weight="bold" text-anchor="middle">Byte 0 [7:0]</text>
+      <text x="60" y="42" fill="#ffffff" font-size="10" text-anchor="middle">Mantissa [7:0]</text>
+      <text x="60" y="60" fill="#a5b4fc" font-size="9" text-anchor="middle">尾数低 8 位</text>
+      <text x="60" y="78" fill="#818cf8" font-size="9" text-anchor="middle">小端最低字节</text>
+
+      <!-- Byte 1 -->
+      <rect x="128" y="0" width="120" height="90" rx="4" fill="#312e81" stroke="#6366f1" stroke-width="1.2"/>
+      <text x="188" y="22" fill="#c7d2fe" font-size="11" font-weight="bold" text-anchor="middle">Byte 1 [15:8]</text>
+      <text x="188" y="42" fill="#ffffff" font-size="10" text-anchor="middle">Mantissa [15:8]</text>
+      <text x="188" y="60" fill="#a5b4fc" font-size="9" text-anchor="middle">尾数中低 8 位</text>
+      <text x="188" y="78" fill="#818cf8" font-size="9" text-anchor="middle">浮点数有效位</text>
+
+      <!-- Byte 2 -->
+      <rect x="256" y="0" width="120" height="90" rx="4" fill="#312e81" stroke="#6366f1" stroke-width="1.2"/>
+      <text x="316" y="22" fill="#c7d2fe" font-size="11" font-weight="bold" text-anchor="middle">Byte 2 [23:16]</text>
+      <text x="316" y="42" fill="#ffffff" font-size="10" text-anchor="middle">Exp[0] + Man[22:16]</text>
+      <text x="316" y="60" fill="#a5b4fc" font-size="9" text-anchor="middle">阶码最低位</text>
+      <text x="316" y="78" fill="#818cf8" font-size="9" text-anchor="middle">+ 尾数高 7 位</text>
+
+      <!-- Byte 3 -->
+      <rect x="384" y="0" width="120" height="90" rx="4" fill="#3730a3" stroke="#818cf8" stroke-width="1.5"/>
+      <text x="444" y="22" fill="#e0e7ff" font-size="11" font-weight="bold" text-anchor="middle">Byte 3 [31:24]</text>
+      <text x="444" y="42" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">Sign[31] + Exp[30:24]</text>
+      <text x="444" y="60" fill="#fca5a5" font-size="9" text-anchor="middle">符号位 (0正/1负)</text>
+      <text x="444" y="78" fill="#fde68a" font-size="9" text-anchor="middle">+ 阶码高 7 位</text>
+
+      <!-- Byte 4 ~ 7 保留段 -->
+      <rect x="515" y="0" width="495" height="90" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1.2"/>
+      <text x="760" y="26" fill="#94a3b8" font-size="12" font-weight="bold" text-anchor="middle">Byte 4 ~ Byte 7 : 保留填充段 (Reserved Bytes)</text>
+      <text x="760" y="48" fill="#64748b" font-size="11" text-anchor="middle">0x00  ·  0x00  ·  0x00  ·  0x00</text>
+      <text x="760" y="68" fill="#cbd5e1" font-size="10" text-anchor="middle">CubeMars 官方速度模式协议规范填零保留，确保总线 DLC = 8 满帧传输</text>
+    </g>
+  </g>
+
+  <!-- 详细展开 2: 物理层电气与总线拓扑规范 -->
+  <g transform="translate(35, 355)">
+    <rect width="1050" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="24" fill="#38bdf8" font-size="13" font-weight="bold">▍物理层电气规范与 1Mbps 差分位时序参数 (ISO 11898-2 Standard):</text>
+
+    <g transform="translate(20, 36)">
+      <text x="0" y="20" fill="#cbd5e1" font-size="11">● 标称位速率: <tspan fill="#38bdf8" font-weight="bold">1.000 Mbps</tspan> (位时间 T_bit = 1.000 µs)</text>
+      <text x="0" y="40" fill="#cbd5e1" font-size="11">● 采样点位置: <tspan fill="#38bdf8" font-weight="bold">75.0% ~ 80.0%</tspan> (由 MCP2515 CNF1/CNF2/CNF3 配置)</text>
+      <text x="0" y="60" fill="#cbd5e1" font-size="11">● 差分驱动电平: 显性电平 (CAN_H=3.5V, CAN_L=1.5V, Vdiff=2.0V) │ 隐性电平 (CAN_H=2.5V, CAN_L=2.5V, Vdiff=0V)</text>
+
+      <text x="540" y="20" fill="#cbd5e1" font-size="11">● 终端匹配电阻: <tspan fill="#f59e0b" font-weight="bold">120 Ω ±1%</tspan> (双绞线首尾各并接一颗，吸收反射波)</text>
+      <text x="540" y="40" fill="#cbd5e1" font-size="11">● 位填充规则 (Bit Stuffing): 连续 5 个相同逻辑位后自动插入 1 位反相跳变位</text>
+      <text x="540" y="60" fill="#cbd5e1" font-size="11">● 轴间发送隔离: <tspan fill="#f87171" font-weight="bold">5.0 ms 硬件延时</tspan> (防止连续突发丢帧与总线仲裁碰撞)</text>
+    </g>
+  </g>
+</svg>

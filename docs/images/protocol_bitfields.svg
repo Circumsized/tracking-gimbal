@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1224pt" height="648pt" viewBox="0 0 1224 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-04T15:56:32.849203</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.8.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648 
+L 1224 648 
+L 1224 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 102.593455 177.452308 
+L 373.653818 177.452308 
+L 373.653818 72.775385 
+L 102.593455 72.775385 
+z
+" clip-path="url(#pe1e265af6e)" style="fill: #0284c7; stroke: #1e293b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 383.000727 177.452308 
+L 1121.406545 177.452308 
+L 1121.406545 72.775385 
+L 383.000727 72.775385 
+z
+" clip-path="url(#pe1e265af6e)" style="fill: #059669; stroke: #1e293b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #ffffff; font: 700 10.5px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(173.127816 122.122911)">Control Mode: Bits[10:8]</text>
+    <text style="fill: #ffffff; font: 700 10.5px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(158.348246 135.283677)">0x02 = 速度模式 (Speed Mode)</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #ffffff; font: 700 10.5px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="752.203636" y="128.703294" transform="rotate(-0 752.203636 128.703294)">Node ID: Bits[7:0] (0x01 = Yaw 航向轴 / 0x02 = Pitch 俯仰轴)</text>
+   </g>
+   <g id="text_3">
+    <text style="font: 700 12px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: start" x="97.92" y="41.84" transform="rotate(-0 97.92 41.84)">1. CubeMars GL40 CAN 11-Bit 仲裁段 ID 结构位域 (0x201 / 0x202)</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_4">
+    <path d="M 103.0608 385.410462 
+L 221.2992 385.410462 
+Q 223.8696 385.410462 223.8696 382.619077 
+L 223.8696 276.546462 
+Q 223.8696 273.755077 221.2992 273.755077 
+L 103.0608 273.755077 
+Q 100.4904 273.755077 100.4904 276.546462 
+L 100.4904 382.619077 
+Q 100.4904 385.410462 103.0608 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #4338ca; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 231.5808 385.410462 
+L 349.8192 385.410462 
+Q 352.3896 385.410462 352.3896 382.619077 
+L 352.3896 276.546462 
+Q 352.3896 273.755077 349.8192 273.755077 
+L 231.5808 273.755077 
+Q 229.0104 273.755077 229.0104 276.546462 
+L 229.0104 382.619077 
+Q 229.0104 385.410462 231.5808 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #4338ca; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 360.1008 385.410462 
+L 478.3392 385.410462 
+Q 480.9096 385.410462 480.9096 382.619077 
+L 480.9096 276.546462 
+Q 480.9096 273.755077 478.3392 273.755077 
+L 360.1008 273.755077 
+Q 357.5304 273.755077 357.5304 276.546462 
+L 357.5304 382.619077 
+Q 357.5304 385.410462 360.1008 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #4338ca; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 488.6208 385.410462 
+L 606.8592 385.410462 
+Q 609.4296 385.410462 609.4296 382.619077 
+L 609.4296 276.546462 
+Q 609.4296 273.755077 606.8592 273.755077 
+L 488.6208 273.755077 
+Q 486.0504 273.755077 486.0504 276.546462 
+L 486.0504 382.619077 
+Q 486.0504 385.410462 488.6208 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #4f46e5; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 617.1408 385.410462 
+L 735.3792 385.410462 
+Q 737.9496 385.410462 737.9496 382.619077 
+L 737.9496 276.546462 
+Q 737.9496 273.755077 735.3792 273.755077 
+L 617.1408 273.755077 
+Q 614.5704 273.755077 614.5704 276.546462 
+L 614.5704 382.619077 
+Q 614.5704 385.410462 617.1408 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #334155; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 745.6608 385.410462 
+L 863.8992 385.410462 
+Q 866.4696 385.410462 866.4696 382.619077 
+L 866.4696 276.546462 
+Q 866.4696 273.755077 863.8992 273.755077 
+L 745.6608 273.755077 
+Q 743.0904 273.755077 743.0904 276.546462 
+L 743.0904 382.619077 
+Q 743.0904 385.410462 745.6608 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #334155; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 874.1808 385.410462 
+L 992.4192 385.410462 
+Q 994.9896 385.410462 994.9896 382.619077 
+L 994.9896 276.546462 
+Q 994.9896 273.755077 992.4192 273.755077 
+L 874.1808 273.755077 
+Q 871.6104 273.755077 871.6104 276.546462 
+L 871.6104 382.619077 
+Q 871.6104 385.410462 874.1808 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #334155; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 1002.7008 385.410462 
+L 1120.9392 385.410462 
+Q 1123.5096 385.410462 1123.5096 382.619077 
+L 1123.5096 276.546462 
+Q 1123.5096 273.755077 1120.9392 273.755077 
+L 1002.7008 273.755077 
+Q 1000.1304 273.755077 1000.1304 276.546462 
+L 1000.1304 382.619077 
+Q 1000.1304 385.410462 1002.7008 385.410462 
+z
+" clip-path="url(#pda570b8668)" style="fill: #334155; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_4">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(147.616688 320.959638)">Byte 0</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(140.825219 332.116363)">float[7:0]</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(140.943094 343.228525)">尾数低8位</text>
+   </g>
+   <g id="text_5">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(276.136688 320.959638)">Byte 1</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(266.508313 332.116363)">float[15:8]</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(269.463094 343.228525)">尾数中8位</text>
+   </g>
+   <g id="text_6">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(404.656688 320.959638)">Byte 2</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(392.191406 332.116363)">float[23:16]</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(390.543313 343.228525)">Exp[0]+Man</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(533.176687 320.706207)">Byte 3</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(520.711406 331.862932)">float[31:24]</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(518.250406 343.437394)">Sign+Exp高7</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(661.696687 320.959638)">Byte 4</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(665.058281 332.116363)">0x00</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(657.86 343.228525)">保留填充</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(790.216687 320.959638)">Byte 5</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(793.578281 332.116363)">0x00</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(786.38 343.228525)">保留填充</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(918.736688 320.959638)">Byte 6</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(922.098281 332.116363)">0x00</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(914.9 343.228525)">保留填充</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(1047.256688 320.959638)">Byte 7</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(1050.618281 332.116363)">0x00</text>
+    <text style="fill: #ffffff; font: 700 9.2px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(1043.42 343.228525)">保留填充</text>
+   </g>
+   <g id="text_12">
+    <text style="font: 700 12px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: start" x="97.92" y="244.215385" transform="rotate(-0 97.92 244.215385)">2. GL40 速度模式数据段 DLC=8 字节布局 (小端 float32 + 保留字节)</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_12">
+    <path d="M 102.4896 587.785846 
+L 207.5904 587.785846 
+Q 209.8752 587.785846 209.8752 584.994462 
+L 209.8752 478.921846 
+Q 209.8752 476.130462 207.5904 476.130462 
+L 102.4896 476.130462 
+Q 100.2048 476.130462 100.2048 478.921846 
+L 100.2048 584.994462 
+Q 100.2048 587.785846 102.4896 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #dc2626; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 216.7296 587.785846 
+L 321.8304 587.785846 
+Q 324.1152 587.785846 324.1152 584.994462 
+L 324.1152 478.921846 
+Q 324.1152 476.130462 321.8304 476.130462 
+L 216.7296 476.130462 
+Q 214.4448 476.130462 214.4448 478.921846 
+L 214.4448 584.994462 
+Q 214.4448 587.785846 216.7296 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #dc2626; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 330.9696 587.785846 
+L 436.0704 587.785846 
+Q 438.3552 587.785846 438.3552 584.994462 
+L 438.3552 478.921846 
+Q 438.3552 476.130462 436.0704 476.130462 
+L 330.9696 476.130462 
+Q 328.6848 476.130462 328.6848 478.921846 
+L 328.6848 584.994462 
+Q 328.6848 587.785846 330.9696 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #0284c7; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 445.2096 587.785846 
+L 550.3104 587.785846 
+Q 552.5952 587.785846 552.5952 584.994462 
+L 552.5952 478.921846 
+Q 552.5952 476.130462 550.3104 476.130462 
+L 445.2096 476.130462 
+Q 442.9248 476.130462 442.9248 478.921846 
+L 442.9248 584.994462 
+Q 442.9248 587.785846 445.2096 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #0284c7; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 559.4496 587.785846 
+L 664.5504 587.785846 
+Q 666.8352 587.785846 666.8352 584.994462 
+L 666.8352 478.921846 
+Q 666.8352 476.130462 664.5504 476.130462 
+L 559.4496 476.130462 
+Q 557.1648 476.130462 557.1648 478.921846 
+L 557.1648 584.994462 
+Q 557.1648 587.785846 559.4496 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #d97706; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 673.6896 587.785846 
+L 778.7904 587.785846 
+Q 781.0752 587.785846 781.0752 584.994462 
+L 781.0752 478.921846 
+Q 781.0752 476.130462 778.7904 476.130462 
+L 673.6896 476.130462 
+Q 671.4048 476.130462 671.4048 478.921846 
+L 671.4048 584.994462 
+Q 671.4048 587.785846 673.6896 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #d97706; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 787.9296 587.785846 
+L 893.0304 587.785846 
+Q 895.3152 587.785846 895.3152 584.994462 
+L 895.3152 478.921846 
+Q 895.3152 476.130462 893.0304 476.130462 
+L 787.9296 476.130462 
+Q 785.6448 476.130462 785.6448 478.921846 
+L 785.6448 584.994462 
+Q 785.6448 587.785846 787.9296 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #475569; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 902.1696 587.785846 
+L 1007.2704 587.785846 
+Q 1009.5552 587.785846 1009.5552 584.994462 
+L 1009.5552 478.921846 
+Q 1009.5552 476.130462 1007.2704 476.130462 
+L 902.1696 476.130462 
+Q 899.8848 476.130462 899.8848 478.921846 
+L 899.8848 584.994462 
+Q 899.8848 587.785846 902.1696 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #475569; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 1016.4096 587.785846 
+L 1121.5104 587.785846 
+Q 1123.7952 587.785846 1123.7952 584.994462 
+L 1123.7952 478.921846 
+Q 1123.7952 476.130462 1121.5104 476.130462 
+L 1016.4096 476.130462 
+Q 1014.1248 476.130462 1014.1248 478.921846 
+L 1014.1248 584.994462 
+Q 1014.1248 587.785846 1016.4096 587.785846 
+z
+" clip-path="url(#p453b6eb19e)" style="fill: #7c3aed; stroke: #1e293b; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_13">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(141.109875 523.709941)">Byte 0</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(144.325313 534.381591)">0x59</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(142.216063 545.010616)">帧头 1</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(255.349875 523.709941)">Byte 1</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(258.565313 534.381591)">0x59</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(256.456063 545.010616)">帧头 2</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(369.589875 523.652191)">Byte 2</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(370.362625 534.323841)">Dist_L</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(363.206438 545.068366)">距离低8位</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(483.829875 523.652191)">Byte 3</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(483.395375 534.323841)">Dist_H</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(477.446438 545.068366)">距离高8位</text>
+   </g>
+   <g id="text_17">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(598.069875 523.652191)">Byte 4</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(601.408375 534.323841)">Str_L</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(590 545.068366)">信号强度低</text>
+   </g>
+   <g id="text_18">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(712.309875 523.652191)">Byte 5</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(714.441125 534.323841)">Str_H</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(704.24 545.068366)">信号强度高</text>
+   </g>
+   <g id="text_19">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(826.549875 523.652191)">Byte 6</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(823.97175 534.323841)">Temp_L</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(818.48 545.068366)">芯片温度低</text>
+   </g>
+   <g id="text_20">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(940.789875 523.652191)">Byte 7</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(937.0045 534.323841)">Temp_H</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(932.72 545.068366)">芯片温度高</text>
+   </g>
+   <g id="text_21">
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(1055.029875 523.709941)">Byte 8</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(1046.357062 534.381591)">Checksum</text>
+    <text style="fill: #ffffff; font: 700 8.8px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif" transform="translate(1046.96 545.010616)">累加和校验</text>
+   </g>
+   <g id="text_22">
+    <text style="font: 700 12px 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: start" x="97.92" y="446.590769" transform="rotate(-0 97.92 446.590769)">3. 北醒 TFmini Plus UART 9 字节定长二进制帧结构 (115,200 bps 8N1)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pe1e265af6e">
+   <rect x="97.92" y="51.84" width="1028.16" height="139.569231"/>
+  </clipPath>
+  <clipPath id="pda570b8668">
+   <rect x="97.92" y="254.215385" width="1028.16" height="139.569231"/>
+  </clipPath>
+  <clipPath id="p453b6eb19e">
+   <rect x="97.92" y="456.590769" width="1028.16" height="139.569231"/>
+  </clipPath>
+ </defs>
+</svg>

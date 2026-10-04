@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 560" width="1140" height="560" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="mechBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1140" height="560" rx="16" fill="url(#mechBg)" stroke="#334155" stroke-width="2"/>
+  <text x="40" y="38" fill="#f8fafc" font-size="18" font-weight="700">双轴跟踪云台机械结构正交轴系布局与装配规范 (Mechanical CAD Architecture)</text>
+  <text x="40" y="58" fill="#94a3b8" font-size="12">基于 SolidWorks SLDASM 总成装配 · 轴系回转中心、导电滑环走线、质心平衡与自由度限位</text>
+
+  <!-- 左侧: 正交立面机械构件图 (x=40, y=85, w=480, h=440) -->
+  <g transform="translate(40, 85)">
+    <rect width="480" height="440" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="20" y="26" fill="#38bdf8" font-size="13" font-weight="bold">云台装配立面正交视图 (Orthographic Elevation)</text>
+
+    <!-- 1. 轴线底层先画 (让实体盖住轴线，彻底避免穿字) -->
+    <!-- Yaw 轴回转中心线 (垂直红色虚线) -->
+    <line x1="240" y1="40" x2="240" y2="415" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="6,3"/>
+
+    <!-- Pitch 轴回转中心线 (水平绿色虚线) -->
+    <line x1="80" y1="120" x2="440" y2="120" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6,3"/>
+
+    <!-- 2. 基座固定底盘 -->
+    <rect x="140" y="360" width="200" height="40" rx="4" fill="#334155" stroke="#64748b" stroke-width="1.5"/>
+    <text x="240" y="385" fill="#f8fafc" font-size="11.5" font-weight="bold" text-anchor="middle">固定底盘与安装法兰 (Base Flange)</text>
+
+    <!-- 3. 导电滑环 -->
+    <rect x="205" y="300" width="70" height="60" rx="3" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="240" y="335" fill="#fde68a" font-size="10.5" font-weight="bold" text-anchor="middle">12路微型滑环</text>
+
+    <!-- 4. Yaw 偏航电机 GL40 #1 -->
+    <rect x="180" y="235" width="120" height="65" rx="6" fill="#c2410c" stroke="#fb923c" stroke-width="2"/>
+    <text x="240" y="262" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Yaw 电机 GL40</text>
+    <text x="240" y="282" fill="#ffedd5" font-size="10.5" text-anchor="middle">Node ID: 0x201 (航向轴)</text>
+
+    <!-- 5. U 型旋转支撑悬臂 -->
+    <path d="M 120 235 L 180 235 L 180 180 L 300 180 L 300 235 L 360 235 L 360 120 L 120 120 Z" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+    <text x="240" y="160" fill="#94a3b8" font-size="10" text-anchor="middle">CNC 轻量化铝合金 U 型旋转臂</text>
+
+    <!-- 6. 俯仰载荷舱实体 (实体采用不透明填充，覆盖中心轴线，内部文字绝不穿透) -->
+    <rect x="150" y="65" width="180" height="105" rx="8" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
+    <text x="240" y="94" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">俯仰载荷舱 (Payload Pod)</text>
+    <line x1="160" y1="102" x2="320" y2="102" stroke="#0284c7" stroke-width="1"/>
+    <text x="240" y="122" fill="#e0f2fe" font-size="10.5" text-anchor="middle">IMX219 广角镜头 (130°)</text>
+    <text x="240" y="140" fill="#e0f2fe" font-size="10.5" text-anchor="middle">TFmini Plus 激光雷达</text>
+    <text x="240" y="158" fill="#bae6fd" font-size="9.5" text-anchor="middle">树莓派 Zero 2 W 主控核心</text>
+
+    <!-- 7. Pitch 俯仰电机 (水平放置于侧边，水平横排文字，绝不旋转) -->
+    <rect x="350" y="85" width="105" height="70" rx="6" fill="#c2410c" stroke="#fb923c" stroke-width="2"/>
+    <text x="402" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Pitch 电机</text>
+    <text x="402" y="132" fill="#ffedd5" font-size="10" text-anchor="middle">Node: 0x202</text>
+    <text x="402" y="146" fill="#ffedd5" font-size="9" text-anchor="middle">(俯仰回转轴)</text>
+
+    <!-- 8. 轴线说明徽标 (放在空白处，绝不压在实体上) -->
+    <rect x="250" y="42" width="150" height="20" rx="4" fill="#111827" stroke="#ef4444" stroke-width="1"/>
+    <text x="325" y="56" fill="#fca5a5" font-size="9.5" font-weight="bold" text-anchor="middle">Yaw 轴 (水平 360° 旋转)</text>
+
+    <rect x="20" y="110" width="115" height="20" rx="4" fill="#111827" stroke="#10b981" stroke-width="1"/>
+    <text x="77" y="124" fill="#6ee7b7" font-size="9.5" font-weight="bold" text-anchor="middle">Pitch 轴 (-45°~+60°)</text>
+  </g>
+
+  <!-- 右侧: 机械规范与 3D 模型解析卡片 (x=550, y=85, w=550, h=440) -->
+  <g transform="translate(550, 85)">
+    <!-- 卡片 1: 轴系自由度与机械极限 -->
+    <rect width="550" height="205" rx="8" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+    <text x="20" y="26" fill="#38bdf8" font-size="13.5" font-weight="bold">▍双轴机械运动学与活动自由度规范 (Kinematics Limits):</text>
+    <g transform="translate(20, 42)">
+      <text x="0" y="22" fill="#cbd5e1" font-size="11.5">● <tspan fill="#f8fafc" font-weight="bold">航向轴 (Yaw Axis)</tspan>: 具备微型精密导电滑环，支持 <tspan fill="#34d399" font-weight="bold">360° 无限位连续旋转</tspan></text>
+      <text x="0" y="46" fill="#cbd5e1" font-size="11.5">● <tspan fill="#f8fafc" font-weight="bold">俯仰轴 (Pitch Axis)</tspan>: 软件限位区间 <tspan fill="#34d399" font-weight="bold">-45° (下俯) ~ +60° (上仰)</tspan>，设机械缓冲垫</text>
+      <text x="0" y="70" fill="#cbd5e1" font-size="11.5">● <tspan fill="#f8fafc" font-weight="bold">轴系传动方式</tspan>: FOC 无刷中空轴直驱 (Direct Drive)，彻底消除齿轮与皮带回差</text>
+      <text x="0" y="94" fill="#cbd5e1" font-size="11.5">● <tspan fill="#f8fafc" font-weight="bold">转动惯量匹配</tspan>: 载荷舱总重约为 145g，质心严格调谐在 Pitch 旋转回转轴线上</text>
+      <text x="0" y="118" fill="#cbd5e1" font-size="11.5">● <tspan fill="#f8fafc" font-weight="bold">结构刚度谐振点</tspan>: 一阶机械固有共振频率 &gt; 85 Hz，远离 50Hz 闭环控制带宽</text>
+      <text x="0" y="142" fill="#94a3b8" font-size="11">※ 动平衡设计使电机静态维持电流降至最低，抑制静止时的发热与线圈温升</text>
+    </g>
+
+    <!-- 卡片 2: 3D CAD 模型组件索引清单 -->
+    <g transform="translate(0, 225)">
+      <rect width="550" height="215" rx="8" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+      <text x="20" y="26" fill="#f59e0b" font-size="13.5" font-weight="bold">▍SolidWorks CAD 装配体零件库索引 (3、3D模型/):</text>
+      <g transform="translate(20, 44)">
+        <text x="0" y="22" fill="#cbd5e1" font-size="11.5">1. <tspan fill="#ffffff" font-family="monospace">GL40驱动电路板.SLDPRT</tspan> — CubeMars 驱动板外形与 41×38mm 定位孔</text>
+        <text x="0" y="46" fill="#cbd5e1" font-size="11.5">2. <tspan fill="#ffffff" font-family="monospace">IMX219摄像头（130度）.SLDPRT</tspan> — 索尼 130° 广角镜头组件与柔性排线法兰</text>
+        <text x="0" y="70" fill="#cbd5e1" font-size="11.5">3. <tspan fill="#ffffff" font-family="monospace">Raspberry Pi Zero 2 W.SLDPRT</tspan> — 65×30mm 主板 4-M2.5 沉头孔位定位实体</text>
+        <text x="0" y="94" fill="#cbd5e1" font-size="11.5">4. <tspan fill="#ffffff" font-family="monospace">TF MINI PLUS.SLDPRT</tspan> — 北醒 ToF 激光出光与受光透镜同轴安装卡槽</text>
+        <text x="0" y="118" fill="#cbd5e1" font-size="11.5">5. <tspan fill="#ffffff" font-family="monospace">跟踪云台装配体.SLDASM</tspan> — 完整双轴联调总装工程，含干涉碰撞仿真</text>
+        <text x="0" y="142" fill="#38bdf8" font-size="11">※ 配套提供通用标准 STEP 格式文件，便于直接导入 FreeCAD / Fusion 360 加工</text>
+      </g>
+    </g>
+  </g>
+</svg>

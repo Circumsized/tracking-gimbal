@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 700" width="1240" height="700" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <marker id="arrCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fb923c"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <!-- 背景底色 -->
+  <rect width="1240" height="700" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="2"/>
+
+  <!-- 顶部主标题栏 -->
+  <g transform="translate(45, 34)">
+    <circle cx="10" cy="12" r="5" fill="#38bdf8"/>
+    <text x="26" y="18" fill="#f8fafc" font-size="20" font-weight="700">微型双轴视觉跟踪与测距云台系统 · 架构与全链路数据流拓扑</text>
+    <text x="26" y="38" fill="#94a3b8" font-size="12">Raspberry Pi Zero 2 W · YuNet ONNX (50Hz) · TFmini Plus UART · CubeMars GL40 FOC (1Mbps CAN) · Flask MJPEG (:5000)</text>
+  </g>
+
+  <!-- ==================== 区域 1: 物理传感器层 (左侧 x=45, w=235) ==================== -->
+  <g transform="translate(45, 95)">
+    <rect width="235" height="545" rx="12" fill="#111827" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="0" y="0" width="235" height="36" rx="12" fill="#0284c7" fill-opacity="0.25"/>
+    <text x="16" y="24" fill="#38bdf8" font-size="13" font-weight="700">▍1. 多模态物理感知域</text>
+
+    <!-- IMX219 摄像头卡片 -->
+    <g transform="translate(14, 52)">
+      <rect width="207" height="215" rx="8" fill="#1e293b" stroke="#0ea5e9" stroke-width="1.2"/>
+      <rect x="12" y="12" width="28" height="28" rx="6" fill="#0284c7"/>
+      <circle cx="26" cy="26" r="6" fill="#ffffff"/>
+      <circle cx="26" cy="26" r="3" fill="#0284c7"/>
+      <text x="48" y="24" fill="#f1f5f9" font-size="13.5" font-weight="700">IMX219 摄像头</text>
+      <text x="48" y="38" fill="#7dd3fc" font-size="10.5">索尼 800万像素广角</text>
+      <line x1="12" y1="48" x2="195" y2="48" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="68" fill="#cbd5e1" font-size="11">● 视角: <tspan fill="#38bdf8" font-weight="600">130° 广角对角 FOV</tspan></text>
+      <text x="14" y="90" fill="#cbd5e1" font-size="11">● 接口: <tspan fill="#38bdf8" font-weight="600">MIPI CSI-2 2-Lane</tspan></text>
+      <text x="14" y="112" fill="#cbd5e1" font-size="11">● 捕获: <tspan fill="#38bdf8" font-weight="600">1640×1232 RGB888</tspan></text>
+      <text x="14" y="134" fill="#cbd5e1" font-size="11">● 曝光: <tspan fill="#38bdf8" font-weight="600">20000µs 锁定 50fps</tspan></text>
+      <text x="14" y="156" fill="#cbd5e1" font-size="11">● 选项: <tspan fill="#94a3b8">AeEnable + AwbEnable</tspan></text>
+      <rect x="14" y="174" width="179" height="26" rx="4" fill="#0369a1" fill-opacity="0.3"/>
+      <text x="103" y="191" text-anchor="middle" fill="#7dd3fc" font-size="10.5" font-weight="600">Picamera2 硬件底层流直驱</text>
+    </g>
+
+    <!-- TFmini Plus 雷达卡片 -->
+    <g transform="translate(14, 285)">
+      <rect width="207" height="240" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.2"/>
+      <rect x="12" y="12" width="28" height="28" rx="6" fill="#059669"/>
+      <path d="M 20 26 L 32 26 M 26 20 L 26 32" stroke="#ffffff" stroke-width="2"/>
+      <text x="48" y="24" fill="#f1f5f9" font-size="13.5" font-weight="700">TFmini Plus 雷达</text>
+      <text x="48" y="38" fill="#6ee7b7" font-size="10.5">北醒 ToF 激光测距模组</text>
+      <line x1="12" y1="48" x2="195" y2="48" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="68" fill="#cbd5e1" font-size="11">● 量程: <tspan fill="#34d399" font-weight="600">0.1m ~ 12m (盲区10cm)</tspan></text>
+      <text x="14" y="90" fill="#cbd5e1" font-size="11">● 接口: <tspan fill="#34d399" font-weight="600">TTL UART @ 115200</tspan></text>
+      <text x="14" y="112" fill="#cbd5e1" font-size="11">● 频次: <tspan fill="#34d399" font-weight="600">100Hz 定长 9 字节包</tspan></text>
+      <text x="14" y="134" fill="#cbd5e1" font-size="11">● 校验: <tspan fill="#34d399" font-weight="600">sum(0:8) &amp; 0xFF 校验和</tspan></text>
+      <text x="14" y="156" fill="#cbd5e1" font-size="11">● 过滤: <tspan fill="#f59e0b">strength &gt; 100 噪点滤除</tspan></text>
+      <text x="14" y="178" fill="#cbd5e1" font-size="11">● 饱和: <tspan fill="#f59e0b">strength ≠ 65535 剔除</tspan></text>
+      <rect x="14" y="196" width="179" height="26" rx="4" fill="#047857" fill-opacity="0.3"/>
+      <text x="103" y="213" text-anchor="middle" fill="#6ee7b7" font-size="10.5" font-weight="600">独立后台守护线程阻塞监听</text>
+    </g>
+  </g>
+
+  <!-- ==================== 区域 2: 树莓派计算核心 (中间 x=325, w=530) ==================== -->
+  <g transform="translate(325, 95)">
+    <rect width="530" height="545" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.8"/>
+    <rect x="0" y="0" width="530" height="36" rx="12" fill="#8b5cf6" fill-opacity="0.25"/>
+    <text x="20" y="24" fill="#c084fc" font-size="13" font-weight="700">▍2. 边缘智能计算核心: 树莓派 Zero 2 W (4×A53 @ 1.0GHz, 512MB RAM)</text>
+
+    <!-- 模块 1: 图像前处理 -->
+    <g transform="translate(18, 48)">
+      <rect width="494" height="72" rx="8" fill="#1e293b" stroke="#7c3aed" stroke-width="1.2"/>
+      <text x="16" y="24" fill="#f3e8ff" font-size="13" font-weight="700">① 图像下采样与色域校正 (camera_yunet.py)</text>
+      <text x="16" y="44" fill="#cbd5e1" font-size="11">原生 1640×1232 硬件帧 ➔ cv2.resize 双线性插值 ➔ 640×480 处理画幅</text>
+      <text x="16" y="60" fill="#a78bfa" font-size="10.5">※ 补丁修复: cv2.cvtColor(RGB2BGR) 色域转换，保证 YuNet 检测准确率</text>
+    </g>
+
+    <!-- 模块 2: YuNet 推理 -->
+    <g transform="translate(18, 130)">
+      <rect width="494" height="92" rx="8" fill="#1e293b" stroke="#7c3aed" stroke-width="1.2"/>
+      <text x="16" y="24" fill="#f3e8ff" font-size="13" font-weight="700">② YuNet ONNX 人脸检测与最大目标决策 (50Hz 同频推理)</text>
+      <text x="16" y="44" fill="#cbd5e1" font-size="11">cv2.FaceDetectorYN · 耗时 11.8ms · score_thresh=0.6 · nms_thresh=0.3</text>
+      <text x="16" y="62" fill="#cbd5e1" font-size="11">多目标优选准则: selected_face = max(faces, key=lambda f: f['w']*f['h'])</text>
+      <text x="16" y="80" fill="#38bdf8" font-size="11">解算中心: cx = x + w/2, cy = y + h/2 ➔ 误差: ex = cx - 320, ey = cy - 240</text>
+    </g>
+
+    <!-- 模块 3: 双轴比例速度控制律 -->
+    <g transform="translate(18, 232)">
+      <rect width="494" height="115" rx="8" fill="#1e293b" stroke="#7c3aed" stroke-width="1.2"/>
+      <text x="16" y="24" fill="#f3e8ff" font-size="13" font-weight="700">③ 50Hz 双轴比例速度控制律 (main.py: calc_speed)</text>
+      <text x="16" y="46" fill="#cbd5e1" font-size="11">闭环周期: <tspan fill="#f59e0b" font-weight="bold">T = 20ms</tspan> │ 死区阈值: <tspan fill="#f87171" font-weight="bold">±15 px</tspan> (死区内速度=0，消除静止抖动)</text>
+      <text x="16" y="66" fill="#38bdf8" font-size="11">偏航 Yaw 控制 : vel_yaw = clamp(|ex|×0.003, 0.02, 100) × sgn(ex) × (-1)</text>
+      <text x="16" y="86" fill="#34d399" font-size="11">俯仰 Pitch 控制: vel_pitch = clamp(|ey|×0.003, 0.02, 100) × sgn(ey) × (+1)</text>
+      <text x="16" y="104" fill="#94a3b8" font-size="10.5">※ 物理区间: 死区边界跳变 0.048 rad/s，视场边缘极限最大速度 0.96 rad/s</text>
+    </g>
+
+    <!-- 模块 4: TFmini 线程锁与推流 -->
+    <g transform="translate(18, 360)">
+      <rect width="235" height="165" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="24" fill="#f8fafc" font-size="12.5" font-weight="700">④ 串口激光接收线程</text>
+      <text x="14" y="44" fill="#94a3b8" font-size="10.5">tfmini_uart.py: TFminiReader</text>
+      <line x1="14" y1="52" x2="221" y2="52" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="72" fill="#cbd5e1" font-size="10.5">● 串口 /dev/serial0</text>
+      <text x="14" y="92" fill="#cbd5e1" font-size="10.5">● 双 0x59 帧头滑动匹配</text>
+      <text x="14" y="112" fill="#34d399" font-size="10.5">● threading.Lock 保护</text>
+      <text x="14" y="132" fill="#38bdf8" font-size="10.5">主循环读取: get_distance()</text>
+      <text x="14" y="152" fill="#94a3b8" font-size="10">有效距离回传至主线程</text>
+    </g>
+
+    <g transform="translate(268, 360)">
+      <rect width="244" height="165" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="24" fill="#f8fafc" font-size="12.5" font-weight="700">⑤ Flask MJPEG 推流服务</text>
+      <text x="14" y="44" fill="#94a3b8" font-size="10.5">mjpeg_stream.py (端口 :5000)</text>
+      <line x1="14" y1="52" x2="230" y2="52" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="72" fill="#cbd5e1" font-size="10.5">● 叠加 OSD 十字准星与距离</text>
+      <text x="14" y="92" fill="#cbd5e1" font-size="10.5">● JPEG 质量 80 编码压缩</text>
+      <text x="14" y="112" fill="#f59e0b" font-size="10.5">● 30ms 节流轮询推送 (~33fps)</text>
+      <text x="14" y="132" fill="#cbd5e1" font-size="10.5">● multipart/x-mixed-replace</text>
+      <text x="14" y="152" fill="#38bdf8" font-size="10">http://&lt;树莓派IP&gt;:5000</text>
+    </g>
+  </g>
+
+  <!-- ==================== 区域 3: 执行机构与外设网络 (右侧 x=895, w=300) ==================== -->
+  <g transform="translate(895, 95)">
+    <rect width="300" height="545" rx="12" fill="#111827" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="0" y="0" width="300" height="36" rx="12" fill="#ea580c" fill-opacity="0.25"/>
+    <text x="16" y="24" fill="#fb923c" font-size="13" font-weight="700">▍3. 动力驱动与通信端点</text>
+
+    <!-- MCP2515 控制板卡片 -->
+    <g transform="translate(15, 52)">
+      <rect width="270" height="96" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+      <text x="14" y="24" fill="#fde68a" font-size="13" font-weight="700">SPI ➔ CAN 控制板 (MCP2515)</text>
+      <text x="14" y="44" fill="#cbd5e1" font-size="11">硬件: MCP2515T-I/ST + 8.000MHz 晶振</text>
+      <text x="14" y="64" fill="#cbd5e1" font-size="11">收发器: SN65HVD230DR (3.3V 差分驱动)</text>
+      <text x="14" y="84" fill="#38bdf8" font-size="11">Linux 接口: <tspan font-weight="bold">can0 @ 1,000,000 bps (1Mbps)</tspan></text>
+    </g>
+
+    <!-- Yaw 偏航电机 -->
+    <g transform="translate(15, 160)">
+      <rect width="270" height="110" rx="8" fill="#1e293b" stroke="#ea580c" stroke-width="1.2"/>
+      <rect x="12" y="12" width="26" height="26" rx="4" fill="#c2410c"/>
+      <text x="20" y="30" fill="#ffffff" font-size="12" font-weight="bold">Y</text>
+      <text x="46" y="26" fill="#f8fafc" font-size="13" font-weight="700">GL40 偏航电机 (Yaw 轴)</text>
+      <text x="46" y="42" fill="#fb923c" font-size="10.5">标准帧 CAN ID: 0x201 (速度模式 2)</text>
+      <line x1="12" y1="52" x2="258" y2="52" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="70" fill="#cbd5e1" font-size="11">● 负载: 前4B float32 (rad/s) + 后4B 0x00</text>
+      <text x="14" y="90" fill="#cbd5e1" font-size="11">● 极性: <tspan fill="#f87171" font-weight="bold">YAW_DIRECTION = -1 (反向)</tspan></text>
+      <text x="14" y="104" fill="#94a3b8" font-size="10">下发后硬件休眠 5ms 轴间防冲突延迟</text>
+    </g>
+
+    <!-- Pitch 俯仰电机 -->
+    <g transform="translate(15, 282)">
+      <rect width="270" height="110" rx="8" fill="#1e293b" stroke="#ea580c" stroke-width="1.2"/>
+      <rect x="12" y="12" width="26" height="26" rx="4" fill="#c2410c"/>
+      <text x="20" y="30" fill="#ffffff" font-size="12" font-weight="bold">P</text>
+      <text x="46" y="26" fill="#f8fafc" font-size="13" font-weight="700">GL40 俯仰电机 (Pitch 轴)</text>
+      <text x="46" y="42" fill="#fb923c" font-size="10.5">标准帧 CAN ID: 0x202 (速度模式 2)</text>
+      <line x1="12" y1="52" x2="258" y2="52" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="70" fill="#cbd5e1" font-size="11">● 负载: 前4B float32 (rad/s) + 后4B 0x00</text>
+      <text x="14" y="90" fill="#cbd5e1" font-size="11">● 极性: <tspan fill="#34d399" font-weight="bold">PITCH_DIRECTION = +1 (同向)</tspan></text>
+      <text x="14" y="104" fill="#94a3b8" font-size="10">与 Yaw 轴共用 1Mbps 差分双绞总线</text>
+    </g>
+
+    <!-- Web 客户端端点 -->
+    <g transform="translate(15, 404)">
+      <rect width="270" height="118" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.2"/>
+      <text x="14" y="24" fill="#a7f3d0" font-size="13" font-weight="700">远程 Web 监视端 (局域网浏览器)</text>
+      <text x="14" y="44" fill="#38bdf8" font-size="11">URL: <tspan font-weight="bold">http://&lt;树莓派IP&gt;:5000</tspan></text>
+      <line x1="14" y1="52" x2="258" y2="52" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="72" fill="#cbd5e1" font-size="11">● 实时 640×480 无刷新流传输</text>
+      <text x="14" y="92" fill="#cbd5e1" font-size="11">● 目标锁定准星变色反馈 (红/绿)</text>
+      <text x="14" y="110" fill="#cbd5e1" font-size="11">● 实时距离 OSD 毫米级动态叠显</text>
+    </g>
+  </g>
+
+  <!-- ==================== 走廊清晰导线 (避开所有卡片文字) ==================== -->
+  <!-- 1. CSI 视频流: (280, 190) -> (325, 190) -->
+  <line x1="280" y1="190" x2="323" y2="190" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrCyan)"/>
+  <rect x="283" y="172" width="38" height="16" rx="3" fill="#0f172a" stroke="#0284c7" stroke-width="0.8"/>
+  <text x="302" y="184" fill="#38bdf8" font-size="9" font-weight="bold" text-anchor="middle">CSI</text>
+
+  <!-- 2. UART 激光流: (280, 420) -> (325, 420) -->
+  <line x1="280" y1="420" x2="323" y2="420" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrGreen)"/>
+  <rect x="283" y="402" width="38" height="16" rx="3" fill="#0f172a" stroke="#059669" stroke-width="0.8"/>
+  <text x="302" y="414" fill="#34d399" font-size="9" font-weight="bold" text-anchor="middle">UART</text>
+
+  <!-- 3. SPI-CAN 下发: (855, 290) -> (895, 200) (走独立通道) -->
+  <path d="M 855 290 L 875 290 L 875 200 L 893 200" fill="none" stroke="#fb923c" stroke-width="2.5" marker-end="url(#arrowOrange)"/>
+  <rect x="858" y="240" width="34" height="16" rx="3" fill="#0f172a" stroke="#ea580c" stroke-width="0.8"/>
+  <text x="875" y="252" fill="#fb923c" font-size="9" font-weight="bold" text-anchor="middle">CAN</text>
+
+  <!-- 4. Web 推流导线: (855, 460) -> (895, 460) -->
+  <line x1="855" y1="460" x2="893" y2="460" stroke="#34d399" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrGreen)"/>
+  <rect x="860" y="442" width="32" height="16" rx="3" fill="#0f172a" stroke="#10b981" stroke-width="0.8"/>
+  <text x="876" y="454" fill="#34d399" font-size="9" font-weight="bold" text-anchor="middle">HTTP</text>
+
+  <!-- 底部关键参数栏 -->
+  <g transform="translate(45, 655)">
+    <rect width="1150" height="26" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="575" y="17" fill="#94a3b8" font-size="11" text-anchor="middle">
+      系统控制主周期: <tspan fill="#38bdf8" font-weight="bold">20ms (50Hz)</tspan> │ 死区滤波: <tspan fill="#f87171" font-weight="bold">±15px</tspan> │ 增益: <tspan fill="#a855f7" font-weight="bold">Kp=0.003</tspan> │ 最大限速: <tspan fill="#34d399" font-weight="bold">0.96 rad/s</tspan> │ CAN速率: <tspan fill="#fb923c" font-weight="bold">1 Mbps 标准帧</tspan> │ 动力电压: <tspan fill="#f59e0b" font-weight="bold">24V DC</tspan>
+    </text>
+  </g>
+</svg>
