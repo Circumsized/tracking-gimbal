@@ -44,7 +44,7 @@
   - [5.3 candump / cansend 报文格式与实战命令集](#53-candump--cansend-报文格式与实战命令集)
   - [5.4 协议要素与源码逐行追溯表](#54-协议要素与源码逐行追溯表)
 - [6. 控制周期报文时序流水线](#6-控制周期报文时序流水线)
-- [7. 协议历史误读纠偏说明 (CyberGear 澄清)](#7-协议历史误读纠偏说明-cybergear-澄清)
+- [7. 电机通信协议辨析 (与 29 位扩展帧协议的差异)](#7-电机通信协议辨析-与-29-位扩展帧协议的差异)
 - [8. 双协议二进制位域综合总图 (SVG 矢量图)](#8-双协议二进制位域综合总图-svg-矢量图)
 - [9. 参考资料](#9-参考资料)
 - [附录 常用术语与缩略语](#附录-常用术语与缩略语)
@@ -817,7 +817,7 @@ def send(self, can_id, data):
 | 字段 | 类型 | 本系统取值 | 语义 |
 | :--- | :--- | :--- | :--- |
 | `arbitration_id` | int | `0x201` / `0x202` | 11 位标准帧标识符（Mode 2 ≪ 8 \| Node ID） |
-| `is_extended_id` | bool | **`False`（强制）** | **False → 11-bit 标准帧**；若误置 True 将发出 29-bit 扩展帧，GL40 无法识别（见第 7 章纠偏声明） |
+| `is_extended_id` | bool | **`False`（强制）** | **False → 11-bit 标准帧**；若误置 True 将发出 29-bit 扩展帧，GL40 无法识别（见第 7 章协议辨析） |
 | `is_remote_frame` | bool | `False`（默认） | 数据帧而非遥控帧 |
 | `data` | bytes / iterable | ≤ 8 字节 | 速度帧：`pack_speed()` 输出；命令帧：`FF×7+FC/FD` 等 |
 | `dlc` | int | 由 `len(data)` 自动推导 | 本系统恒为 8 |
@@ -956,19 +956,20 @@ sequenceDiagram
 
 ---
 
-## 7. 协议历史误读纠偏说明 (CyberGear 澄清)
+## 7. 电机通信协议辨析 (与 29 位扩展帧协议的差异)
 
-在前序会话的中间解析文件中（如 `hardware_and_protocol_summary.json`），曾错误地将电机协议描述为"**小米 CyberGear 29 位扩展帧微电机协议**"。此为 AI 辅助整理过程中的虚构产物，经源码核实予以修正：。
+CubeMars GL40 驱动器采用专用的 11 位标准帧协议。与常见 29 位扩展帧微电机协议相比，其通信机制差异如下：
 
-经逐行审查实际 Python 驱动代码 `gimbal_can.py` 并比对官方 PDF 手册（《GL40模组驱动使用说明》V1.0.0）原文：
-
-| # | 证据 | 结论 |
+| 对比维度 | CubeMars GL40 (本系统采用) | 常见 29 位扩展帧运控协议 |
 | :--- | :--- | :--- |
-| 事实 1 | 代码 `msg = can.Message(arbitration_id=can_id, data=data, is_extended_id=False)` | 明确声明 `is_extended_id=False` → **11 位标准帧**，而非 CyberGear 的 29 位扩展帧 |
-| 事实 2 | `self.yaw_id = 0x201`、`self.pitch_id = 0x202` | 完全符合 CubeMars GL 系列编址公式：`0x200 (Mode 2 速度模式) | Node ID (0x01 / 0x02)` |
-| 事实 3 | 命令帧 `FF×7+FC/FD`、速度帧 float32 小端 + 零填充 | 与 GL 系列驱动器手册 V1.0.0 的报文定义逐字段吻合，与 CyberGear 协议（ID 0x01/0x02 命令帧、float32 大端多帧拼装等）完全不同 |
+| **帧 ID 格式** | **11 位标准帧** (`is_extended_id=False`) | 29 位扩展帧 (`is_extended_id=True`) |
+| **节点寻址机制** | 高 3 位模式编码 + 低 8 位电机 ID 单帧组合 | 目标地址、源地址与通信类型跨多个位段组合 |
+| **速度控制数据载荷** | **前 4 字节直接存放 float32 小端单精度浮点数** | 速度与扭矩多采用 12 位或 16 位整型位压缩映射 |
+| **驱动接口实现** | 纯 Python 标准库 `struct.pack("<f", vel)` 即可打包 | 需编写专用的位解包函数与缩放比例映射 |
 
-**结论**：本系统完全运行于 **CubeMars GL40 官方 11 位标准数据帧协议**之下。"CyberGear 29 位扩展帧"的表述在任何现存文档中均应视为错误并以此章为准。
+源码实现事实：
+- `gimbal_can.py:18` 明确声明了 `is_extended_id=False`；
+- 控制 ID 取值 `0x201` 与 `0x202`，完全符合 GL40 模式 2 速度控制的基底规范。
 
 ---
 
