@@ -410,8 +410,8 @@ CAN 位时间由若干时间量子 TQ 构成，寄存器 CNF1/CNF2/CNF3 编程�
 
 $$
 \begin{aligned}
-T_Q &= \frac{2 \times (\text{BRP} + 1)}{F_{\text{OSC}}} \\[6pt]
-\text{NBT} &= \text{Sync\_Seg} + \text{Prop\_Seg} + \text{Phase\_Seg1} + \text{Phase\_Seg2} \\[6pt]
+T_Q &= \frac{2 \times (\text{BRP} + 1)}{F_{\text{OSC}}} \\
+\text{NBT} &= \text{Sync\_Seg} + \text{Prop\_Seg} + \text{Phase\_Seg1} + \text{Phase\_Seg2} \\
 \text{BitRate} &= \frac{1}{\text{NBT} \times T_Q}, \qquad \text{SamplePoint} = \frac{\text{Sync\_Seg} + \text{Prop\_Seg} + \text{Phase\_Seg1}}{\text{NBT}} \times 100\%
 \end{aligned}
 $$

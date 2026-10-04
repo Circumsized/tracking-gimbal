@@ -6,6 +6,7 @@
 [![Bus](https://img.shields.io/badge/Bus-SocketCAN%201Mbps%20%7C%20UART%20115200-0A66C2)](https://www.kernel.org/doc/Documentation/networking/can.txt)
 [![Actuator](https://img.shields.io/badge/Motor-CubeMars%20GL40%20FOC-FF6B00)](https://www.cubemars.com/)
 [![Web](https://img.shields.io/badge/Web-Flask%20MJPEG%20Stream-000000?logo=flask)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
 
 ---
 
@@ -49,7 +50,7 @@
   - [6.1 模块类关系拓扑图 (Class Diagram)](#61-模块类关系拓扑图-class-diagram)
   - [6.2 跨模块数据实体模型图 (Data Entity Model)](#62-跨模块数据实体模型图-data-entity-model)
   - [6.3 系统全生命周期与电机运行状态机 (State Machine)](#63-系统全生命周期与电机运行状态机-state-machine)
-  - [6.4 50Hz (20ms) 控制周期流水线多核并发甘特图 (Gantt)](#64-50hz-20ms-控制周期流水线多核并发甘特图-gantt)
+  - [6.4 单周期流水线时延与四核并发架构 (纯矢量图 + 架构图)](#64-单周期流水线时延与四核并发架构-纯矢量图--架构图)
   - [6.5 线程间数据共享与互斥锁临界区拓扑 (ASCII)](#65-线程间数据共享与互斥锁临界区拓扑-ascii)
   - [6.6 远程 Web 推流网络会话生命周期时序图 (Mermaid Sequence)](#66-远程-web-推流网络会话生命周期时序图-mermaid-sequence)
   - [6.7 开机自检 (POST) 与异常故障隔离决策树 (Fault Tree)](#67-开机自检-post-与异常故障隔离决策树-fault-tree)
@@ -497,14 +498,18 @@ flowchart TD
 
 ### 5.2 比例速度控制数学建模与参数矩阵
 
-偏差定义：
-$$e_x = cx - 320, \quad e_y = cy - 240$$
+水平与垂直方向像素位置偏差定义：
 
-控制律函数：
+$$
+e_x = cx - 320, \qquad e_y = cy - 240
+$$
+
+带死区的比例截断速度控制律分段函数：
+
 $$
 v(e) = \begin{cases} 
-0.0, & |e| \le \text{Deadzone} \\[6pt] 
-\operatorname{clamp}\!\big(|e| \cdot K_p,\; v_{\min},\; v_{\max}\big) \cdot \operatorname{sgn}(e) \cdot \text{Direction}, & |e| > \text{Deadzone} 
+0.0, & |e| \le \text{Deadzone} \\ 
+\text{clamp}(|e| \cdot K_p, \, v_{\min}, \, v_{\max}) \cdot \text{sgn}(e) \cdot \text{Direction}, & |e| > \text{Deadzone} 
 \end{cases}
 $$
 
@@ -722,35 +727,46 @@ stateDiagram-v2
 
 ---
 
-### 6.4 50Hz (20ms) 控制周期流水线多核并发甘特图 (Gantt)
+### 6.4 单周期流水线时延与四核并发架构 (纯矢量图 + 架构图)
 
-树莓派 Zero 2 W 的四核 Cortex-A53 架构在单个主循环迭代（门限 20 ms，实测 ≈22.6 ms）内实现硬件级时序流水线重叠执行：
+单帧端到端从感光采样到双轴电机响应的精确时间推进线如下图所示（标称门限 20ms 与实测单周期约 22.7ms 双基准）：
+
+![单周期端到端处理流水线时序图](docs/images/timing_pipeline.svg)
+
+树莓派 Zero 2 W 的四核 Cortex-A53 架构在单个主循环迭代（门限 20ms，实测约 22.6ms）内实现多任务并行调度拓扑如下：
 
 ```mermaid
-gantt
-    title 单次主循环迭代 ≈22.6ms (门限 20ms/50Hz, 实测有效控制率 ≈44Hz)
-    dateFormat  X
-    axisFormat %s ms
+flowchart TD
+    subgraph CORE0["CPU Core 0: 主控制闭环 (50Hz 硬时钟驱动)"]
+        direction TB
+        C0_1["1. Picamera2 帧捕获与降采样 (4.2ms)"] --> C0_2["2. YuNet ONNX 人脸推理 (11.8ms)"]
+        C0_2 --> C0_3["3. 偏差解算与 P 环速度计算 (0.8ms)"]
+        C0_3 --> C0_4["4. CAN 双轴下发含 5ms 休眠 (5.3ms)"]
+    end
 
-    section Core 0 (主控制闭环)
-    Picamera2 帧捕获与降采样        :a1, 0, 4.2
-    YuNet 人脸模型推理计算          :a2, 4.2, 16.0
-    误差解算与 P 环速度计算         :a3, 16.0, 16.5
-    CAN 双轴指令下发 (含5ms轴间休眠) :a4, 16.5, 21.8
+    subgraph CORE1["CPU Core 1: 异步激光测距守护线程 (100Hz 独立流)"]
+        direction TB
+        C1_1["1. 阻塞读取 /dev/serial0 UART 缓冲区"] --> C1_2["2. 双 0x59 帧头同步与累加和校验"]
+        C1_2 --> C1_3["3. 三重物理门限过滤 (强度/饱和/盲区)"]
+        C1_3 --> C1_4["4. threading.Lock 保护写入共享距离值"]
+    end
 
-    section Core 1 (异步测距线程)
-    UART 缓冲区字节流阻塞读取      :b1, 0, 15.0
-    校验和判定与有效性门限过滤      :b2, 15.0, 16.2
-    获取线程锁并更新共享数据        :b3, 16.2, 16.5
+    subgraph CORE2["CPU Core 2/3: 局域网 Web 视频推流服务 (Flask 异步线程)"]
+        direction TB
+        C2_1["1. 从主循环安全拷贝最新渲染帧"] --> C2_2["2. JPEG 软件有损压缩编码 (质量 Q80)"]
+        C2_2 --> C2_3["3. HTTP Multipart 协议持续推流响应"]
+        C2_3 --> C2_4["4. 内部 30ms 节流休眠控制 (~33.3 FPS)"]
+    end
 
-    section Core 2/3 (Web 推流服务)
-    获取最新渲染帧 (互斥拷贝)       :c1, 2.0, 3.2
-    JPEG 软件有损压缩编码 (Q80)     :c2, 3.2, 9.8
-    HTTP Multipart 分块报文推送    :c3, 9.8, 14.0
-    推流循环 30ms 节流休眠         :c4, 14.0, 20.0
+    C1_4 -.->|"非阻塞持锁读取距离"| C0_3
+    C0_4 -.->|"更新显示帧缓冲区"| C2_1
+
+    classDef coreCls fill:#111827,stroke:#334155,stroke-width:1.5px,color:#f8fafc;
+    class CORE0,CORE1,CORE2 coreCls;
 ```
 
-> **甘特图口径说明（第 3 轮审查补充）**：本图早期版本按"20 ms 周期刚好排满、留有 0.9 ms 对齐余量"绘制，但 `send_speed()` 内的 5 ms 轴间休眠加两帧发送合计 ≈5.3 ms，使单次主循环迭代累计达 ≈22.6 ms，**已超过 20 ms 门限——即不存在"调度与周期对齐余量"，标称 50 Hz 在平均口径上未达成，实测有效控制率约 44~45 Hz**。两种口径的完整依据（源码行号、占比重算、对第 3 章稳定性论证的影响）见 `docs/CONTROL_AND_VISION.md` §6.1/§6.3。
+> [!NOTE]
+> **单周期时延口径说明**：`send_speed()` 内的 5ms 轴间休眠加上两帧发送开销合计约为 5.3ms，使得单次主循环迭代累计约为 22.6ms。因此门控 `if now - last_control_time >= CONTROL_PERIOD` 在每轮迭代均满足，**实际有效闭环控制率约为 44Hz ~ 45Hz**。该 5ms 延时有效防止了 SPI 发送邮箱拥堵与电机从机丢帧。详细的单周期时间预算分解见 `docs/CONTROL_AND_VISION.md` 第 6 章。
 
 ---
 

@@ -231,8 +231,8 @@ $$e_x = cx - 320, \qquad e_y = cy - 240$$
 
 $$
 v(e) = \begin{cases} 
-0.0, & |e| \le D \\[6pt] 
-\operatorname{clamp}\!\big(|e| \cdot K_p,\; v_{\min},\; v_{\max}\big) \cdot \operatorname{sgn}(e) \cdot \text{Direction}, & |e| > D 
+0.0, & |e| \le D \\ 
+\text{clamp}\big(|e| \cdot K_p,\; v_{\min},\; v_{\max}\big) \cdot \text{sgn}(e) \cdot \text{Direction}, & |e| > D 
 \end{cases}
 $$
 
@@ -320,7 +320,7 @@ $$\varphi = -\omega_b\,\tau_v = -0.75\times0.016 = -0.012\ \text{rad} \approx -0
 
 ### 3.7 描述函数法近似死区非线性与极限环分析
 
-1. **死区的描述函数近似**：对死区非线性 $g(e)=0\;( |e|\le D),\ \operatorname{sgn}(e)(|e|-D)\;( |e|>D)$，正弦输入幅值 $A\ge D$ 时的等效增益（describing function）：
+1. **死区的描述函数近似**：对死区非线性 $g(e)=0\;( |e|\le D),\ \text{sgn}(e)(|e|-D)\;( |e|>D)$，正弦输入幅值 $A\ge D$ 时的等效增益（describing function）：
    $$N(A) = K_p\cdot\frac{2}{\pi}\left[\frac{\pi}{2} - \arcsin\frac{D}{A} - \frac{D}{A}\sqrt{1-\left(\frac{D}{A}\right)^2}\right]$$
    $N(A)$ 随 $A\to D^+$ 趋于 0、随 $A\to\infty$ 恢复至 $K_p$。**死区属"增益软化"型非线性，其 $N(A)$ 单调收缩，$-1/N(A)$ 轨迹不与 $L(j\omega)$ 相交**（$|N|\le K_p$ 使交点条件比线性情形更严），故死区本身不产生极限环——这与相平面（§3.8）"全局滑入死区盒刹停"的结论互证。
 2. **像素量化的等效死区**：脸庞中心量化到整数像素，误差的最小离散步长 1 px 对应速度步长 $\Delta v = 0.003\,\text{rad/s}$；积分误差速率 $\le \Delta v \cdot f = 0.75\,\text{px/s}$，远小于死区宽度 15 px 的收缩速度（$0.75\,\text{rad/s}\times250\,\text{px/rad}=187\,\text{px/s}$ 名义像移），故量化抖动不足以在死区外维持等幅振荡。
@@ -391,9 +391,9 @@ flowchart TD
 三维目标点 $P(X_c,Y_c,Z_c)$ 的像平面特征速度与相机速度 $\mathbf V=(v_x,v_y,v_z,\omega_x,\omega_y,\omega_z)$ 的微分关系（Chaumette 交互矩阵）：
 
 $$
-\begin{bmatrix} \dot{u} \\[4pt] \dot{v} \end{bmatrix} = 
+\begin{bmatrix} \dot{u} \\ \dot{v} \end{bmatrix} = 
 \begin{bmatrix} 
--\frac{f_x}{Z_c} & 0 & \frac{u - cx_0}{Z_c} & \frac{(u - cx_0)(v - cy_0)}{f_y} & -\left(f_x + \frac{(u - cx_0)^2}{f_x}\right) & \frac{f_x(v - cy_0)}{f_y} \\[8pt] 
+-\frac{f_x}{Z_c} & 0 & \frac{u - cx_0}{Z_c} & \frac{(u - cx_0)(v - cy_0)}{f_y} & -\left(f_x + \frac{(u - cx_0)^2}{f_x}\right) & \frac{f_x(v - cy_0)}{f_y} \\ 
 0 & -\frac{f_y}{Z_c} & \frac{v - cy_0}{Z_c} & f_y + \frac{(v - cy_0)^2}{f_y} & -\frac{(u - cx_0)(v - cy_0)}{f_x} & -\frac{f_y(u - cx_0)}{f_x} 
 \end{bmatrix} 
 \begin{bmatrix} 
