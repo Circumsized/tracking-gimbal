@@ -153,7 +153,7 @@ flowchart LR
 
 ### 2.1 电路底板拓扑结构矢量全景 (SVG)
 
-![硬件电路底板原理图拓扑结构](docs/images/hardware_schematic_block.svg)
+![硬件电路底板原理图拓扑结构](images/hardware_schematic_block.svg)
 
 ### 2.2 树莓派 40-Pin 扩展引脚电气连接定义
 
@@ -300,7 +300,12 @@ $$
 > [!NOTE]
 > **工程参数修正**
 > - **导通压降修正**：计入片内达林顿双极型开关管的饱和压降 $V_{\text{SAT}} \approx 1.3\,\text{V}$ 后，实际有效占空比修正为：
->   $$D_{\text{eff}} = \frac{V_{\text{out}} + V_{\text{SAT}}}{V_{\text{in}}} \approx \frac{5.0 + 1.3}{24.0} \approx 26.25\%$$
+>   
+
+$$
+D_{\text{eff}} = \frac{V_{\text{out}} + V_{\text{SAT}}}{V_{\text{in}}} \approx \frac{5.0 + 1.3}{24.0} \approx 26.25\%
+$$
+
 > - **导通模式判据**：当负载电流大于临界连续电流 $I_{\text{LB}} = \Delta I_L / 2$ 时，回路处于连续导通模式 (CCM)。本系统在 $2.0\,\text{A}$ 额定负载下稳定运行于 CCM。
 
 ### 4.2 滤波电感选型与纹波电流设计

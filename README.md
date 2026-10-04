@@ -532,7 +532,12 @@ $$
 ![比例速度控制律精细特性与截断分析](docs/images/control_law_comparison.svg)
 
 1. **死区边界非连续速度起跳**：
-   $$v_{start} = 16 \times 0.003 = 0.048 \text{ rad/s} \approx 2.75^\circ/\text{s}$$
+   
+
+$$
+v_{start} = 16 \times 0.003 = 0.048 \text{ rad/s} \approx 2.75^\circ/\text{s}
+$$
+
 2. **理论最小速度限幅 ($v_{min} = 0.02$) 成为死代码 (Dead Code)**：
    由于起步速度 $0.048\text{ rad/s} > 0.02\text{ rad/s}$，所有死区外的计算值天然高于 $v_{min}$，`clamp` 函数中的下限保护永远不会被触发。
 3. **理论上限 ($v_{max} = 100.0$) 永不饱和**：

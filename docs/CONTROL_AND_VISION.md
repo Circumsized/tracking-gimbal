@@ -122,7 +122,7 @@ flowchart LR
 
 针孔成像几何建立三维目标点 $P(X_c,Y_c,Z_c)$ 到像平面像素 $(u,v)$ 的投影关系。主光轴 $+Z_c$ 水平对齐像主点 $c_0(320,240)$；TFmini 激光雷达安装于相机正上方（垂直基线偏置 $b_y=28\,\text{mm}$），发射平行主光轴的 850 nm 测距脉冲——该偏置是"视觉中心对准目标"与"测距点对准目标"之间的微小系统误差源（对角 FOV ≈ 130°，旁轴近似下影响可忽略）。
 
-![针孔成像几何模型与空间同轴测距投影](docs/images/optical_geometry_projection.svg)
+![针孔成像几何模型与空间同轴测距投影](images/optical_geometry_projection.svg)
 
 ### 2.4 像平面视场几何定义与死区盒空间分布
 
@@ -172,7 +172,9 @@ flowchart LR
 
 ### 2.6 最大面积准则的物理意义与工程权衡
 
-$$\text{Target} = \arg\max_{f \in \text{Faces}} (f.w \times f.h)$$
+$$
+\text{Target} = \arg\max_{f \in \text{Faces}} (f.w \times f.h)
+$$
 
 - **物理意义**：在针孔模型下，同一物理尺寸目标的像面积 $S \propto 1/Z_c^2$，"面积最大"即"距离最近"，构成**最近脸代理指标**；同时大面积目标通常对应更高置信度与更多可用纹理，是自然形成的显著性（salience）代理。
 - **工程局限**（已作为认知风险登记）：
@@ -213,7 +215,7 @@ stateDiagram-v2
 
 在 640×480 视场内，双轴合成角速度模长 $\|\omega\|=\sqrt{\omega_{\text{yaw}}^2+\omega_{\text{pitch}}^2}$ 的空间分布：
 
-![视场平面目标分布与驱动速度模长热力拓扑](docs/images/tracking_heatmap.svg)
+![视场平面目标分布与驱动速度模长热力拓扑](images/tracking_heatmap.svg)
 
 > 读图要点：死区盒 $[-15,15]^2$ 为速度零值"平顶"；盒外速度幅值随 $|e|$ 线性扩张，因 `direction` 极性在四个象限形成反对称条纹；yaw 方向最大 0.96 rad/s，pitch 方向最大 0.72 rad/s（$|e_y|_{\max}=240\,\text{px}$），故云图上下边缘等值线先于左右边缘收敛。
 
@@ -225,7 +227,9 @@ stateDiagram-v2
 
 设画面基准中心 $(cx_0,cy_0)=(320,240)$（`CENTER_X/Y`），目标中心 $(cx,cy)=(x+w/2,\,y+h/2)$，则像素偏差：
 
-$$e_x = cx - 320, \qquad e_y = cy - 240$$
+$$
+e_x = cx - 320, \qquad e_y = cy - 240
+$$
 
 控制函数 $v(e)$（`calc_speed`，main.py:39-49）为带死区的比例截断映射：
 
@@ -253,27 +257,45 @@ $$
 
 1. **死区边界非连续起跳（Boundary Step，满足 CRT-REQ-001）**：
    误差越过 $|e|=15\,\text{px}$ 的瞬间，速度不连续跃升至
-   $$v_{\text{start}} = 16 \times 0.003 = 0.048\ \text{rad/s} \approx 2.75^\circ/\text{s}$$
+   
+
+$$
+v_{\text{start}} = 16 \times 0.003 = 0.048\ \text{rad/s} \approx 2.75^\circ/\text{s}
+$$
+
    该跃阶用于克服无刷电机轴承静摩擦与导电滑环 Stiction，属**有意引入的"起跳力矩"**，代价是 3.2~3.4 节展示的弱非线性（由描述函数法证明无害）。
 2. **理论最小限幅 $v_{\min}=0.02$ 为死代码（Dead Code）**：
    因 $v_{\text{start}}=0.048 > 0.02$，死区外一切输入下 `clamp` 的下界永不生效；该参数仅在未来下调 $K_p$ 时提供地板保护。
 3. **理论最大限幅 $v_{\max}=100.0$ 永不饱和**：
    视场极端偏差 $|e_x|_{\max}=320\,\text{px}$ 仅产生 $0.96\,\text{rad/s}\approx 55.0^\circ/\text{s}$，距 100 rad/s 有约 104 倍余量。故有效工作区间严格锁定为
-   $$v \in [-0.96,-0.048]\,\cup\,\{0\}\,\cup\,[0.048,0.96]\ \text{rad/s}\ \ (\text{yaw})$$
+   
+
+$$
+v \in [-0.96,-0.048]\,\cup\,\{0\}\,\cup\,[0.048,0.96]\ \text{rad/s}\ \ (\text{yaw})
+$$
 
 ### 3.3 连续域闭环数学建模与单调收敛性证明
 
 云台基座静止、仅双轴回转时，由 §4.4 交互矩阵的纯旋转简化式 $\dot e \approx -f\,\omega$，电机速度环近似为一阶惯性 $G_m(s)=1/(1+sT_m)$，指令 $\omega_{\text{cmd}}=K_p e$（死区外）。开环传递函数：
 
-$$L(s) = \frac{f_x K_p}{s\,(1+sT_m)}$$
+$$
+L(s) = \frac{f_x K_p}{s\,(1+sT_m)}
+$$
 
 闭环特征方程（连续域）：
 
-$$1 + L(s) = 0 \;\Longleftrightarrow\; T_m s^2 + s + f_x K_p = 0$$
+$$
+1 + L(s) = 0 \;\Longleftrightarrow\; T_m s^2 + s + f_x K_p = 0
+$$
 
 - **理想极限 $T_m \to 0$**：退化为 $\lambda = -f_x K_p = -250\times0.003 = -0.75\ \text{s}^{-1}$，$\tau = 1.33\ \text{s}$，一阶系统**结构上无超调**（CRT-REQ-004）。
 - **工程估计 $T_m = 30\,\text{ms}$**（GL40 速度环带宽 ~30 Hz 量级的保守折算）：判别式 $1-4T_mfK_p = 1-0.09 = 0.91 > 0$，双实极点
-  $$s_{1,2} = \frac{-1 \pm \sqrt{0.91}}{0.06} \;\Rightarrow\; s_1 \approx -0.768\ \text{s}^{-1},\quad s_2 \approx -32.6\ \text{s}^{-1}$$
+  
+
+$$
+s_{1,2} = \frac{-1 \pm \sqrt{0.91}}{0.06} \;\Rightarrow\; s_1 \approx -0.768\ \text{s}^{-1},\quad s_2 \approx -32.6\ \text{s}^{-1}
+$$
+
   主极点 $\lambda_1=-0.768\,\text{s}^{-1}$（$\tau_1\approx1.30\,\text{s}$）与理想估计一致（偏差仅 2.4%），次极点被电机速度环吸收。**结论：闭环为欠阻尼裕量充足的一阶级动态，无超调、单调收敛。**
 
 ### 3.4 离散系统建模：ZOH、脉冲传递函数与 Jury 稳定性判定
@@ -281,24 +303,56 @@ $$1 + L(s) = 0 \;\Longleftrightarrow\; T_m s^2 + s + f_x K_p = 0$$
 按 Ogata [R1] 的 ZOH 等效方法（$T=0.02\,\text{s}$，$a = e^{-T/T_m}$）：
 
 1. **电机速度环脉冲传递函数**（ZOH 保持下的阶跃响应离散化）：
-   $$\omega[k] = a\,\omega[k-1] + (1-a)\,\omega_{\text{cmd}}[k], \qquad G_m(z) = \frac{1-a}{z-a}$$
+   
+
+$$
+\omega[k] = a\,\omega[k-1] + (1-a)\,\omega_{\text{cmd}}[k], \qquad G_m(z) = \frac{1-a}{z-a}
+$$
+
 2. **像移与被控量关系**（ZOH 近似 $\dot e = -f\omega$ 在周期内为常值）：
-   $$e[k+1] = e[k] - f\,T\,\omega[k]$$
+   
+
+$$
+e[k+1] = e[k] - f\,T\,\omega[k]
+$$
+
 3. 消去中间变量 $\omega[k]$（回代 $\omega[k-1] = -(e[k]-e[k-1])/(fT)$）后得**闭环脉冲模型**：
-   $$e[k+1] = \bigl(1 + a - \beta\bigr)\,e[k] - a\,e[k-1], \qquad \beta = f\,T\,K_p\,(1-a)$$
+   
+
+$$
+e[k+1] = \bigl(1 + a - \beta\bigr)\,e[k] - a\,e[k-1], \qquad \beta = f\,T\,K_p\,(1-a)
+$$
+
 4. **闭环特征方程**：
-   $$z^2 - (1+a-\beta)\,z + a = 0$$
+   
+
+$$
+z^2 - (1+a-\beta)\,z + a = 0
+$$
+
 5. **数值验证**（$a=e^{-20/30}=0.5134$，$fTK_p=250\times0.02\times0.003=0.015$，$\beta=0.015\times0.4866=0.0073$）：
-   $$z^2 - 1.5061\,z + 0.5134 = 0 \;\Rightarrow\; z_1 = 0.9847,\quad z_2 = 0.5214$$
+   
+
+$$
+z^2 - 1.5061\,z + 0.5134 = 0 \;\Rightarrow\; z_1 = 0.9847,\quad z_2 = 0.5214
+$$
+
    极点均在单位圆内（Jury 判据：$|a|=0.5134<1$；$1-(1+a-\beta)+a=\beta>0$；$1+(1+a-\beta)+a=2-a+2...>0$ 成立），离散闭环稳定；等效时间常数
-   $$\tau_d = -\frac{T}{\ln z_1} = -\frac{0.02}{\ln 0.9847} \approx 1.30\ \text{s}$$
+   
+
+$$
+\tau_d = -\frac{T}{\ln z_1} = -\frac{0.02}{\ln 0.9847} \approx 1.30\ \text{s}
+$$
+
    与连续域 $\tau_1=1.30\,\text{s}$ 精确吻合；$T_m\to0$ 时退化为 $z_1 \to 1-fTK_p = 0.985 = e^{-fK_pT}$，与 $e^{-0.75\times0.02}$ 一致。**离散化结论：50 Hz 采样对 0.75 rad/s 的闭环带宽形成极大分离（Nyquist=157 rad/s，带宽占比 0.5%），量化与采样均不改变稳定性结论。**
 
 ### 3.5 纯滞后分析对相位裕度的侵蚀评估
 
 视觉链端到端滞后 $\tau_v \approx 16\,\text{ms}$（帧捕获缩放 4.2 ms + YuNet 推理 11.8 ms，第 6.1 节），叠加 ZOH 半采样滞后 $T/2 = 10\,\text{ms}$，总等效滞后 $\tau_{\text{eff}} \approx 26\,\text{ms}$。在闭环带宽 $\omega_b = 0.75\,\text{rad/s}$ 处引入的相位滞后：
 
-$$\varphi = -\omega_b\,\tau_v = -0.75\times0.016 = -0.012\ \text{rad} \approx -0.69^\circ \quad (\text{ZOH 分量再加 } -0.43^\circ)$$
+$$
+\varphi = -\omega_b\,\tau_v = -0.75\times0.016 = -0.012\ \text{rad} \approx -0.69^\circ \quad (\text{ZOH 分量再加 } -0.43^\circ)
+$$
 
 两项合计约 $-1.1^\circ$，对 §3.6 的裕量论证无实质影响；这也验证了"低带宽换鲁棒"设计哲学的量化收益：**滞后预算的 99% 被牺牲给慢速闭环，而非快速性**。
 
@@ -321,7 +375,12 @@ $$\varphi = -\omega_b\,\tau_v = -0.75\times0.016 = -0.012\ \text{rad} \approx -0
 ### 3.7 描述函数法近似死区非线性与极限环分析
 
 1. **死区的描述函数近似**：对死区非线性 $g(e)=0\;( |e|\le D),\ \text{sgn}(e)(|e|-D)\;( |e|>D)$，正弦输入幅值 $A\ge D$ 时的等效增益（describing function）：
-   $$N(A) = K_p\cdot\frac{2}{\pi}\left[\frac{\pi}{2} - \arcsin\frac{D}{A} - \frac{D}{A}\sqrt{1-\left(\frac{D}{A}\right)^2}\right]$$
+   
+
+$$
+N(A) = K_p\cdot\frac{2}{\pi}\left[\frac{\pi}{2} - \arcsin\frac{D}{A} - \frac{D}{A}\sqrt{1-\left(\frac{D}{A}\right)^2}\right]
+$$
+
    $N(A)$ 随 $A\to D^+$ 趋于 0、随 $A\to\infty$ 恢复至 $K_p$。**死区属"增益软化"型非线性，其 $N(A)$ 单调收缩，$-1/N(A)$ 轨迹不与 $L(j\omega)$ 相交**（$|N|\le K_p$ 使交点条件比线性情形更严），故死区本身不产生极限环——这与相平面（§3.8）"全局滑入死区盒刹停"的结论互证。
 2. **像素量化的等效死区**：脸庞中心量化到整数像素，误差的最小离散步长 1 px 对应速度步长 $\Delta v = 0.003\,\text{rad/s}$；积分误差速率 $\le \Delta v \cdot f = 0.75\,\text{px/s}$，远小于死区宽度 15 px 的收缩速度（$0.75\,\text{rad/s}\times250\,\text{px/rad}=187\,\text{px/s}$ 名义像移），故量化抖动不足以在死区外维持等幅振荡。
 3. **指令侧量化**：CAN 载荷为 32-bit 小端 float（`pack_speed`），速度量化可忽略；时间量化来自 20 ms 控制节拍与 5 ms×2 的 CAN 帧间隔，均在 §3.4 采样带宽（$0.75 \ll 157\,\text{rad/s}$）覆盖范围内。
@@ -331,19 +390,19 @@ $$\varphi = -\omega_b\,\tau_v = -0.75\times0.016 = -0.012\ \text{rad} \approx -0
 
 **(1) 比例速度控制律精细特性与截断分析**——起跳点、死区平台、线性段与永不触达的限幅守卫：
 
-![比例速度控制律精细特性与截断分析](docs/images/control_law_comparison.svg)
+![比例速度控制律精细特性与截断分析](images/control_law_comparison.svg)
 
 解读：曲线呈"零平台—跳变—线性斜坡"三段结构；既然斜坡最大纵距 0.96 rad/s < 100 rad/s 守卫线，两轴参数配置下 `clamp` 上下界在整条特性曲线上均无交点，$v_{\min}$ 被认定为死代码（3.2 节特性 2）。
 
 **(2) 像平面 2D 误差相空间收敛流线场**：
 
-![像平面二维误差相空间收敛流线场与典型轨迹](docs/images/phase_portrait.svg)
+![像平面二维误差相空间收敛流线场与典型轨迹](images/phase_portrait.svg)
 
 流线沿 $-\nabla\!\big(\tfrac{1}{2}e_x^2+\tfrac{1}{2}e_y^2\big)$ 方向单调指向原点，在 $[-15,15]^2$ 被吸收为平衡点集；**相平面给出一致最终有界的直观证据**：任意初始 $(e_x(0),e_y(0))$ 的轨迹均滑入死区盒，不存在闭轨或极限环。
 
 **(3) 闭环动态阶跃响应与扰动抑制对比**：
 
-![闭环控制系统抗扰动动态阶跃响应对比仿真](docs/images/step_response_dynamic.svg)
+![闭环控制系统抗扰动动态阶跃响应对比仿真](images/step_response_dynamic.svg)
 
 工况：初值 220 px 阶跃 + $t=1.8\,\text{s}$ 注入 80 px 扰动。理论预测（$\lambda=-0.75\,\text{s}^{-1}$）：阶跃段 $e(t)=205\,e^{-0.75t}$（扣除 15 px 死区），进入 $|e|\le15$ 用时 $t=\ln(205/15)/0.75 \approx 3.49\,\text{s}$；扰动恢复 $80\to15$ 用时 $\ln(65/15)/0.75 \approx 1.94\,\text{s}$；全程无过冲、无振荡。仿真曲线由 SIMULINK/SCILAB 按 [R8] 步长准则（$h\le T/10$）复现。
 
@@ -366,7 +425,9 @@ $$\varphi = -\omega_b\,\tau_v = -0.75\times0.016 = -0.012\ \text{rad} \approx -0
 
 本系统是**面向 2-DOF 云台的、以角速度为控制量的图像误差直接伺服**：不显式求解位姿、不做交互矩阵在线估计与求逆，而是把 IBVS 交互矩阵的纯旋转、小角度分量以"标称化恒增益"形式内置：
 
-$$\boldsymbol\omega_{\text{cmd}} = K_p\,\boldsymbol e,\qquad \boldsymbol e = \begin{bmatrix} e_x \\ e_y \end{bmatrix},\qquad \boldsymbol\omega_{\text{cmd}}=\begin{bmatrix}\omega_{\text{yaw}} \\ \omega_{\text{pitch}}\end{bmatrix}$$
+$$
+\boldsymbol\omega_{\text{cmd}} = K_p\,\boldsymbol e,\qquad \boldsymbol e = \begin{bmatrix} e_x \\ e_y \end{bmatrix},\qquad \boldsymbol\omega_{\text{cmd}}=\begin{bmatrix}\omega_{\text{yaw}} \\ \omega_{\text{pitch}}\end{bmatrix}
+$$
 
 其严格解释见 §4.4：这是对旋转分量 $\dot{\mathbf e} = -f\,\boldsymbol\omega$ 的常增益闭环，等价于"单位化交互矩阵 + 比例控制"的 IBVS 特例。视觉部分（YuNet）提供的 $(cx,cy)$ 即图像特征点；**感知—控制界面是一条 2 维误差向量，无深度、无位姿、无外参在线辨识**——这是系统在 50 ms 级算力平台上仍可实时运行的根本原因。
 
@@ -410,11 +471,15 @@ $$
 
 云台纯回转（基座静止 $\mathbf v=0$）、目标近光轴小角度、且误差以主点为基准记 $e_x=u-320,\ e_y=v-240$ 时：
 
-$$\dot{e}_x \approx -f_x\,\omega_y\!\left(\triangleq\omega_{\text{yaw}}\right), \qquad \dot{e}_y \approx -f_y\,\omega_x\!\left(\triangleq\omega_{\text{pitch}}\right)$$
+$$
+\dot{e}_x \approx -f_x\,\omega_y\!\left(\triangleq\omega_{\text{yaw}}\right), \qquad \dot{e}_y \approx -f_y\,\omega_x\!\left(\triangleq\omega_{\text{pitch}}\right)
+$$
 
 （旋转耦合项 $\propto (u-cx_0)(v-cy_0)/f$ 在 15 px 死区邻域内 $\le 0.25\,\text{px}$ 量级，忽略。）代入控制律 $\omega_{\text{yaw}}=-K_pe_x\times(\text{direction})^{-1}$ 得单轴标量方程：
 
-$$\dot e_x + (f_x K_p)\,e_x = 0 \quad\Longrightarrow\quad \lambda = -f_x K_p \approx -250\times0.003 = -0.75\ \text{s}^{-1},\ \ \tau\approx1.33\,\text{s}$$
+$$
+\dot e_x + (f_x K_p)\,e_x = 0 \quad\Longrightarrow\quad \lambda = -f_x K_p \approx -250\times0.003 = -0.75\ \text{s}^{-1},\ \ \tau\approx1.33\,\text{s}
+$$
 
 **物理意义**：像移角速率（rad/s）= 误差增益（rad/s/px）× 像素误差（px），闭环把特征点"拉"回主点；负号保证回复方向；$f_xK_p=0.75\,\text{s}^{-1}$ 即闭环带宽（rad/s 与 1/s 同量纲）。这正是 §3.3 特征方程在 $T_m\to0$ 时的退化形式，构成连续、离散、频域三视图的一致性锚点。
 
@@ -422,7 +487,9 @@ $$\dot e_x + (f_x K_p)\,e_x = 0 \quad\Longrightarrow\quad \lambda = -f_x K_p \ap
 
 取正定候选李雅普诺夫函数 $V(\mathbf e)=\tfrac12(e_x^2+e_y^2)$，在死区外：
 
-$$\dot V = e_x\dot e_x + e_y\dot e_y = -f_xK_p\,e_x^2 - f_yK_p\,e_y^2 = -2(fK_p)\,V \;<\;0\ \ (\mathbf e \neq 0)$$
+$$
+\dot V = e_x\dot e_x + e_y\dot e_y = -f_xK_p\,e_x^2 - f_yK_p\,e_y^2 = -2(fK_p)\,V \;<\;0\ \ (\mathbf e \neq 0)
+$$
 
 - **线性域（$|e|>15\,\text{px}$）**：$V(t)=V(0)e^{-2fK_pt}$，误差按 $e^{-0.75t}$ **全局指数稳定**（实际上在本域为线性系统，指数率精确而非近似）；
 - **含死区全空间**：$V$ 指数递减直至进入盒 $B=[-15,15]^2$，盒内 $\dot V\equiv0$（$v=0$）——依 LaSalle 不变原理，系统**一致最终有界（UUB）于死区盒**，残差带 $\|e\|_\infty\le15\,\text{px}$，无极限环；
@@ -465,7 +532,7 @@ $$\dot V = e_x\dot e_x + e_y\dot e_y = -f_xK_p\,e_x^2 - f_yK_p\,e_y^2 = -2(fK_p)
 
 ### 6.1 50Hz（20ms）单周期时间预算
 
-![时间预算与算力分配环形图](docs/images/time_budget_donut.svg)
+![时间预算与算力分配环形图](images/time_budget_donut.svg)
 
 | 序号 | 任务 | 耗时 | 占比 | 源码锚点 |
 | :---: | :--- | ---: | ---: | :--- |
@@ -493,7 +560,7 @@ $$\dot V = e_x\dot e_x + e_y\dot e_y = -f_xK_p\,e_x^2 - f_yK_p\,e_y^2 = -2(fK_p)
 
 单帧端到端（光子到达 CMOS → 电机线圈建立力矩）的推进阶段：
 
-![端到端时序时延流水线分解](docs/images/timing_pipeline.svg)
+![端到端时序时延流水线分解](images/timing_pipeline.svg)
 
 关键累积：曝光读出 + ISP + 捕获缩放（§2.2）→ YuNet 推理 → 控制律 → CAN 串行化（8 B 帧 @ 500 kbps 位时间 ≈ 0.22 ms）+ 5 ms 帧间隔 → GL40 速度环响应 → 机械响应。视觉链滞后 $\tau_v\approx16\,\text{ms}$ 已在 §3.5 折算为 $-1.1^\circ$ 相角；纯滞后不威胁稳定，但决定了 §5.3 的带宽取舍边界。
 
@@ -668,14 +735,14 @@ stateDiagram-v2
 
 | 证据文件（相对 `docs/`） | 支撑 V&V | 内容要点 |
 | :--- | :--- | :--- |
-| `docs/images/control_law_comparison.svg` | V&V-C01/C04/C05 | 三段式特性曲线与限幅守卫判定 |
-| `docs/images/phase_portrait.svg` | V&V-C03 | 相平面收敛流线与 UUB 死区吸收 |
-| `docs/images/step_response_dynamic.svg` | V&V-C02 | 阶跃 + 扰动双工况动态对比 |
-| `docs/images/time_budget_donut.svg` | V&V-C07 | 20 ms 预算占比 |
-| `docs/images/timing_pipeline.svg` | CRT-REQ-006 | 端到端时延分解 |
-| `docs/images/tracking_heatmap.svg` | CRT-REQ-001 | 视场速度模长分布 |
-| `docs/images/optical_geometry_projection.svg` | §4.4 | 针孔投影与同轴测距几何 |
-| `docs/images/control_loop_block_diagram.svg` | §3 章整体 | 闭环控制框图（ZOH + 死区 + 电机 + 光学反馈） |
+| `images/control_law_comparison.svg` | V&V-C01/C04/C05 | 三段式特性曲线与限幅守卫判定 |
+| `images/phase_portrait.svg` | V&V-C03 | 相平面收敛流线与 UUB 死区吸收 |
+| `images/step_response_dynamic.svg` | V&V-C02 | 阶跃 + 扰动双工况动态对比 |
+| `images/time_budget_donut.svg` | V&V-C07 | 20 ms 预算占比 |
+| `images/timing_pipeline.svg` | CRT-REQ-006 | 端到端时延分解 |
+| `images/tracking_heatmap.svg` | CRT-REQ-001 | 视场速度模长分布 |
+| `images/optical_geometry_projection.svg` | §4.4 | 针孔投影与同轴测距几何 |
+| `images/control_loop_block_diagram.svg` | §3 章整体 | 闭环控制框图（ZOH + 死区 + 电机 + 光学反馈） |
 
 ---
 
@@ -703,7 +770,7 @@ stateDiagram-v2
 7. [R7] Y. Wu *et al.*, "YuNet: A Tiny Millisecond-level Face Detector", *Machines*, 2023.（2023mar 权重、5 点 landmark、输出头结构）
 8. [R8] SIMULINK/SCILAB 数字仿真建模准则：定步长 $h\le T/10$、ZOH 离散化惯例。
 9. [R9] 本项目源码基线：`main.py`、`camera_yunet.py`、`gimbal_can.py`、`mjpeg_stream.py`、`tfmini_uart.py`（2026-10-04）。
-10. [R10] 本文证据图集：`docs/images/`（optical_geometry_projection.svg、tracking_heatmap.svg、control_loop_block_diagram.svg、control_law_comparison.svg、phase_portrait.svg、step_response_dynamic.svg、time_budget_donut.svg、timing_pipeline.svg 纯矢量图集）。
+10. [R10] 本文证据图集：`images/`（optical_geometry_projection.svg、tracking_heatmap.svg、control_loop_block_diagram.svg、control_law_comparison.svg、phase_portrait.svg、step_response_dynamic.svg、time_budget_donut.svg、timing_pipeline.svg 纯矢量图集）。
 
 ## 附录 常用缩略语表 (Glossary & Acronyms)
 

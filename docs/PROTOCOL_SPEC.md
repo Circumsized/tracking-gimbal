@@ -167,7 +167,7 @@ $$
 - 不含 IFS 的裸帧长 **108 bit**；计入 3 bit IFS 后为 **111 bit**。
 - 位填充区覆盖 **SOF → CRC 序列**（共 $1+12+6+64+15 = 98$ bit），最坏情况额外插入填充位后单帧可达约 **130~135 bit**（详见 3.6 节负载率计算）。
 
-> 本系统完整帧结构矢量图另见：`docs/images/can_frame_phy_spec.svg`。
+> 本系统完整帧结构矢量图另见：`images/can_frame_phy_spec.svg`。
 
 ### 2.3 逐位非破坏性仲裁机制与竞争过程
 
@@ -974,7 +974,7 @@ sequenceDiagram
 
 ## 8. 双协议位域综合总图 (SVG 矢量图)
 
-![通信协议二进制位域布局与数据帧格式](docs/images/protocol_bitfields.svg)
+![通信协议二进制位域布局与数据帧格式](images/protocol_bitfields.svg)
 
 ---
 
@@ -1023,5 +1023,4 @@ sequenceDiagram
 | **UVLO / OCP** | Under-Voltage Lockout / Over-Current Protection | 欠压锁定 / 过流保护 |
 
 ---
-
 
